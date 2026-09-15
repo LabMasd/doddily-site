@@ -55,26 +55,35 @@ a{color:inherit}
 .store svg{width:22px;height:22px}
 @media (max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding-top:16px}.hero h1{max-width:none}}
 
-/* phone */
-.phone-wrap{display:flex;justify-content:center;position:relative}
-.phone-wrap::before{content:"";position:absolute;inset:8% 6% 10%;background:var(--accent-soft);border-radius:48px;transform:rotate(-4deg)}
-.phone{position:relative;width:min(330px,86vw);background:var(--ink);border-radius:46px;padding:12px;box-shadow:0 30px 60px rgba(30,37,54,.22)}
-.screen{background:var(--milk);border-radius:36px;overflow:hidden;padding:16px 14px 18px}
-.s-head{display:flex;justify-content:center;margin:6px 0 12px}
-.s-head .wordmark{font-size:17px}
-.pill{display:flex;gap:6px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13px}
-.pill b{font-weight:600}.pill span{color:var(--muted)}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin:10px 0 8px;text-align:center}
-.week div{border-radius:10px;padding:4px 0 5px;font:500 10px var(--text);color:var(--muted)}
-.week strong{display:block;font:700 15px/1.1 var(--display);color:var(--ink)}
+/* phone mockup */
+.stage{display:flex;justify-content:center;position:relative;padding:8px 0 28px}
+.stage::before{content:"";position:absolute;inset:4% -4% 2%;background:radial-gradient(55% 50% at 50% 46%,rgba(199,181,245,.9) 0%,rgba(199,181,245,.35) 45%,transparent 72%);z-index:0}
+.device{position:relative;z-index:1;width:340px;border-radius:60px;padding:11px;background:linear-gradient(150deg,#454c5e 0%,#1d222d 38%,#141821 62%,#353c4c 100%);box-shadow:inset 0 0 0 1.5px #0c0f15,inset 0 1.5px 0 rgba(255,255,255,.22),0 50px 90px -30px rgba(30,37,54,.55),0 20px 40px -20px rgba(30,37,54,.35)}
+.device::before,.device::after{content:"";position:absolute;width:4px;border-radius:3px;background:linear-gradient(90deg,#11151d,#3a4152)}
+.device::before{left:-3px;top:170px;height:56px;box-shadow:0 72px 0 #262c39}
+.device::after{right:-3px;top:210px;height:92px}
+.screen{position:relative;height:710px;border-radius:49px;overflow:hidden;background:var(--milk);box-shadow:0 0 0 1px #000}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:114px;height:34px;border-radius:20px;background:#000;z-index:4}
+.status{display:flex;justify-content:space-between;align-items:center;height:52px;padding:4px 30px 0 38px;font:600 15px/1 var(--text);color:var(--ink)}
+.status .icons{display:flex;gap:6px;align-items:center;color:var(--ink)}
+.status svg{height:12px;width:auto;fill:currentColor}
+.app{padding:2px 14px 0}
+.app-logo{display:flex;justify-content:center;margin:4px 0 12px}
+.app-logo .wordmark{font-size:18px}
+.searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font:500 13.5px var(--text);color:var(--muted)}
+.searchbar svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.week{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;margin:10px 0 8px;text-align:center}
+.week div{border-radius:11px;padding:4px 0 5px;font:500 10px var(--text);color:var(--muted)}
+.week strong{display:block;font:700 15px/1.15 var(--display);color:var(--ink)}
 .week .on{background:var(--accent);color:var(--ink)}
-.chips{display:flex;gap:6px;overflow:hidden;margin-bottom:6px}
-.chips span{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 10px;font:500 11px var(--text)}
+.chips{display:flex;gap:6px;overflow:hidden;margin:0 -14px 4px;padding:0 14px}
+.chips span{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font:500 11.5px var(--text)}
 .chips .on{background:var(--ink);border-color:var(--ink);color:#fff}
 .chips .kid{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.summary-line{font-size:11.5px;color:var(--muted);margin:6px 0 0}
 .s-title{font:700 14px var(--display);margin:10px 0 2px}
 .row{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
-.row:first-of-type{border-top:0}
+.s-title + .row{border-top:0}
 .t{font:700 16px/1 var(--display);font-variant-numeric:tabular-nums}
 .t small{display:block;font:500 10px var(--text);color:var(--muted);margin-top:3px}
 .n{display:flex;justify-content:space-between;gap:6px;font:600 13px/1.25 var(--text)}
@@ -84,6 +93,13 @@ a{color:inherit}
 .tags span{font:500 10px var(--text);border-radius:999px;padding:1px 7px;background:var(--chip)}
 .tags .free{background:var(--leaf-soft);color:var(--leaf)}
 .tags .drop{background:var(--accent-soft);color:var(--accent-text)}
+.screen::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(rgba(244,246,248,0),var(--milk) 60%);pointer-events:none;z-index:1}
+.tabbar{position:absolute;left:16px;right:16px;bottom:26px;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(223,227,233,.9);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(30,37,54,.14)}
+.tabbar span{display:flex;flex-direction:column;align-items:center;gap:2px;font:600 10px var(--text);color:var(--ink);padding:6px 0 5px;border-radius:999px}
+.tabbar .on{background:#EDEFF3;color:#0A84FF}
+.tabbar svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:124px;height:5px;border-radius:3px;background:var(--ink);z-index:3}
+@media (max-width:380px){.device{transform:scale(.88);transform-origin:top center;margin-bottom:-86px}}
 
 /* flower animation */
 .bloom{transform-origin:50% 50%;animation:breathe 3.2s ease-in-out infinite}
@@ -144,22 +160,31 @@ footer a:hover{color:var(--ink)}
       </div>
     </div>
 
-    <div class="phone-wrap" aria-hidden="true">
-      <div class="phone">
+    <div class="stage" aria-hidden="true">
+      <div class="device">
         <div class="screen">
-          <div class="s-head"><span class="wordmark"><span class="o"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</span></div>
-          <div class="pill">📍 <b>E8 3PB</b> <span>within 3 mi</span></div>
-          <div class="week">
-            <div class="on">Today<strong>16</strong></div><div>Thu<strong>17</strong></div><div>Fri<strong>18</strong></div><div>Sat<strong>19</strong></div><div>Sun<strong>20</strong></div><div>Mon<strong>21</strong></div><div>Tue<strong>22</strong></div>
+          <div class="island"></div>
+          <div class="status"><span>9:41</span><span class="icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 16 12"><path d="M8 12 5.4 9.3a3.7 3.7 0 0 1 5.2 0L8 12Zm-4.4-4.5L1.9 5.8a8.6 8.6 0 0 1 12.2 0l-1.7 1.7a6.2 6.2 0 0 0-8.8 0ZM0 3.9A11.3 11.3 0 0 1 16 3.9l-1.7 1.7a8.9 8.9 0 0 0-12.6 0L0 3.9Z"/></svg><svg viewBox="0 0 27 12"><rect x=".6" y=".6" width="23" height="10.8" rx="3.3" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".45"/><rect x="2.2" y="2.2" width="19.8" height="7.6" rx="2"/><path d="M25 4.2v3.6c.8-.3 1.3-1 1.3-1.8S25.8 4.5 25 4.2Z" opacity=".45"/></svg></span></div>
+          <div class="app">
+            <div class="app-logo"><span class="wordmark"><span class="o"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</span></div>
+            <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>Search classes, groups and places</div>
+            <div class="week"><div class="on">Today<strong>16</strong></div><div>Thu<strong>17</strong></div><div>Fri<strong>18</strong></div><div>Sat<strong>19</strong></div><div>Sun<strong>20</strong></div><div>Mon<strong>21</strong></div><div>Tue<strong>22</strong></div><div>Week<strong>All</strong></div></div>
+            <div class="chips"><span class="on">Everything</span><span class="kid">Right for Ada (14 months)</span><span>Soft play</span></div>
+            <div class="summary-line">12 sessions today within 3 mi of E8 3PB</div>
+            <div class="s-title">Sessions</div>
+            <div class="row"><div class="t">09:30<small>to 10:15</small></div><div><div class="n">Baby and toddler music <em>6 min walk</em></div><div class="v">Church hall</div><div class="tags"><span>£9</span><span>12–36 months</span></div></div></div>
+            <div class="row"><div class="t">10:00<small>to 10:30</small></div><div><div class="n">Rhyme time <em>9 min walk</em></div><div class="v">Local library</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
+            <div class="row"><div class="t">10:30<small>to 11:30</small></div><div><div class="n">Stay and play <em>14 min walk</em></div><div class="v">Children’s centre</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
+            <div class="row"><div class="t">11:15<small>to 12:00</small></div><div><div class="n">Toddler sensory class <em>1.2 mi</em></div><div class="v">Community centre</div><div class="tags"><span>Term booking</span><span>13–36 months</span></div></div></div>
+            <div class="row"><div class="t">13:30<small>to 14:15</small></div><div><div class="n">Toddler football <em>1.4 mi</em></div><div class="v">Sports hall</div><div class="tags"><span>£8</span><span>18–48 months</span></div></div></div>
           </div>
-          <div class="chips"><span class="on">Everything</span><span class="kid">Right for Ada (14 months)</span><span>Soft play</span></div>
-          <div class="s-title">Sessions</div>
-          <div class="row"><div class="t">09:30<small>to 10:15</small></div><div><div class="n">Baby and toddler music <em>6 min walk</em></div><div class="v">Church hall</div><div class="tags"><span>£9</span><span>12–36 months</span></div></div></div>
-          <div class="row"><div class="t">10:00<small>to 10:30</small></div><div><div class="n">Rhyme time <em>9 min walk</em></div><div class="v">Local library</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
-          <div class="row"><div class="t">10:30<small>to 11:30</small></div><div><div class="n">Stay and play <em>14 min walk</em></div><div class="v">Children’s centre</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
-          <div class="row"><div class="t">11:15<small>to 12:00</small></div><div><div class="n">Toddler sensory class <em>1.2 mi</em></div><div class="v">Community centre</div><div class="tags"><span>Term booking</span><span>13–36 months</span></div></div></div>
-          <div class="s-title">Go any time</div>
-          <div class="row"><div class="t">🧩</div><div><div class="n">Soft play, under-2s area <em>18 min walk</em></div><div class="v">Leisure centre</div></div></div>
+          <div class="tabbar">
+            <span class="on"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Today</span>
+            <span><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11.2a6.5 6.5 0 1 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>Map</span>
+            <span><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg>Saved</span>
+            <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.9 3.8-6.2 7.5-6.2s6.7 2.3 7.5 6.2"/></svg>You</span>
+          </div>
+          <div class="homebar"></div>
         </div>
       </div>
     </div>
@@ -182,7 +207,7 @@ footer a:hover{color:var(--ink)}
       <h2>Everything for the little years, in one place.</h2>
       <p class="intro">Built for tired parents: plain answers to when, where, how far, how much and whether you need to book.</p>
       <div class="flist">
-        <div><h3><span>🗓️</span>A timetable, not a search page</h3><p>Today’s sessions in time order, with how long it takes to walk there.</p></div>
+        <div><h3><span>🗓️</span>A timetable you can search</h3><p>Today’s sessions in time order with walking time, or search the whole week for swimming, rhyme time or a venue.</p></div>
         <div><h3><span>🧒</span>Right for their age</h3><p>Filter for one child or everyone, from newborn classes to toddler football.</p></div>
         <div><h3><span>🧸</span>Classes, groups and soft play</h3><p>Sensory, music, swimming, rhyme times, stay and play, cinema screenings and soft play.</p></div>
         <div><h3><span>🌳</span>Parks and handy places</h3><p>Playgrounds, parks, libraries and baby change, so there’s always a plan B.</p></div>
