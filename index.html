@@ -51,7 +51,7 @@ p,.intro,.fine,figcaption,li,.you-row,.summary-line{text-wrap:pretty}
 @media (max-width:640px){.top nav a{display:none}}
 
 /* hero */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:12px 100px;transform:translateY(-24px)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:12px 40px;transform:translateY(-24px)}
 .hero h1{font:700 clamp(40px,6.2vw,72px)/1.02 var(--display);letter-spacing:-.02em;margin:0 0 20px;max-width:12ch}
 .lede{font-size:20px;color:var(--muted);max-width:34ch;margin:0 0 28px}
 .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -150,8 +150,8 @@ button.row:hover .n,button.row:focus-visible .n{color:var(--accent-text)}
 
 /* sections */
 section{padding-block:72px}
-/* How it works: the block is drawn 86px higher so it sits centred between the hero and the next section. A transform, so nothing else on the page moves. */
-#how .wrap{transform:translateY(-112px)}
+/* How it works sits directly under the hero wash and stays compact. */
+#how{padding-block:0 88px}
 .tint{background:var(--accent-soft)}
 /* Hero wash: purple field with a bloom that follows the cursor */
 body{position:relative}
@@ -162,7 +162,8 @@ body::before{content:"";position:absolute;top:0;left:0;right:0;height:min(1180px
     radial-gradient(38rem 28rem at 94% 78%,rgba(199,181,245,.3),transparent 70%),
     linear-gradient(180deg,#fff 0%,#FCFAFE 14%,#F3EDFE 54%,var(--milk) 100%)}
 main,footer{position:relative;z-index:1}
-.herowrap{position:relative}
+/* The wash lives on this wrapper, so its bottom padding is gradient room. */
+.herowrap{position:relative;padding-block:72px 120px}
 @media (prefers-reduced-motion:reduce){.herowrap::before{transition:none}}
 /* The screens section reads as one centred column, heading included */
 /* Section titles and their intro line sit centred over the content; the hero is a two-column layout and stays left. */
