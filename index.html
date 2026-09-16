@@ -22,7 +22,7 @@
 :root{
   --milk:#F4F6F8; --card:#fff; --ink:#1E2536; --muted:#5F6878; --line:#DFE3E9;
   --accent:#C7B5F5; --accent-line:#8A6FD6; --accent-soft:#F0EAFE; --accent-text:#4B3A8C;
-  --leaf:#2F7A52; --leaf-soft:#E3F2EA; --chip:#EEF0F3;
+  --leaf:#2F7A52; --leaf-soft:#E3F2EA; --chip:#EEF0F3; --rain:#3D6FB6;
   --display:"Bricolage Grotesque", ui-rounded, system-ui, sans-serif;
   --text:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   --wrap:1120px;
@@ -58,7 +58,7 @@ a{color:inherit}
 /* phone mockup */
 .stage{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px 0 28px}
 .stage .note{position:relative;z-index:1;margin:14px 0 0;font-size:14px;color:var(--muted);text-align:center}
-.stage::before{content:"";position:absolute;inset:4% -4% 2%;background:radial-gradient(55% 50% at 50% 46%,rgba(199,181,245,.9) 0%,rgba(199,181,245,.35) 45%,transparent 72%);z-index:0}
+.stage::before{content:"";position:absolute;inset:4% -4% 2%;background:radial-gradient(52% 46% at 50% 46%,rgba(199,181,245,.55) 0%,rgba(199,181,245,.18) 52%,transparent 74%);z-index:0}
 .device{position:relative;z-index:1;width:340px;border-radius:60px;padding:11px;background:linear-gradient(150deg,#454c5e 0%,#1d222d 38%,#141821 62%,#353c4c 100%);box-shadow:inset 0 0 0 1.5px #0c0f15,inset 0 1.5px 0 rgba(255,255,255,.22),0 50px 90px -30px rgba(30,37,54,.55),0 20px 40px -20px rgba(30,37,54,.35)}
 .device::before,.device::after{content:"";position:absolute;width:4px;border-radius:3px;background:linear-gradient(90deg,#11151d,#3a4152)}
 .device::before{left:-3px;top:170px;height:56px;box-shadow:0 72px 0 #262c39}
@@ -130,6 +130,7 @@ a{color:inherit}
 
 /* sections */
 section{padding-block:72px}
+.tint{background:var(--accent-soft)}
 h2{font:700 clamp(30px,4vw,44px)/1.08 var(--display);letter-spacing:-.015em;margin:0 0 14px}
 .intro{color:var(--muted);font-size:19px;max-width:52ch;margin:0 0 36px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:step;list-style:none;padding:0;margin:0}
@@ -141,14 +142,24 @@ h2{font:700 clamp(30px,4vw,44px)/1.08 var(--display);letter-spacing:-.015em;marg
 
 .features{background:var(--card);border-block:1px solid var(--line)}
 .flist{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
-.flist div{padding:22px 0;border-top:1px solid var(--line)}
-.flist h3{font:700 21px var(--display);margin:0 0 6px;display:flex;gap:10px;align-items:center}
-.flist h3 span{font-size:20px}
+.flist div{padding:22px 0;border-top:3px solid var(--line)}
+.flist div:nth-child(1){border-top-color:var(--accent-line)}
+.flist div:nth-child(2){border-top-color:var(--leaf)}
+.flist div:nth-child(3){border-top-color:var(--accent)}
+.flist div:nth-child(4){border-top-color:var(--leaf)}
+.flist div:nth-child(5){border-top-color:var(--rain,#3D6FB6)}
+.flist div:nth-child(6){border-top-color:var(--accent-line)}
+.flist h3{font:700 21px var(--display);margin:0 0 6px}
 .flist p{margin:0;color:var(--muted)}
 @media (max-width:760px){.flist{grid-template-columns:1fr}}
 
+.stats{background:var(--ink);color:#fff}
+.stats h2{color:#fff}
+.stats .fine{color:rgba(255,255,255,.62)}
+.stats .fine a{color:var(--accent)}
 .numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .numbers div{border-left:3px solid var(--accent);padding-left:16px}
+.stats .numbers span{color:rgba(255,255,255,.72)}
 .numbers strong{display:block;font:700 clamp(32px,4vw,46px)/1 var(--display);letter-spacing:-.02em}
 .numbers span{color:var(--muted);font-size:15px}
 @media (max-width:760px){.numbers{grid-template-columns:repeat(2,1fr)}}
@@ -271,7 +282,7 @@ footer a:hover{color:var(--ink)}
     </div>
   </section>
 
-  <section id="screens">
+  <section id="screens" class="tint">
     <div class="wrap">
       <h2>Three screens, and that’s the app.</h2>
       <p class="intro">What’s on today, where it is, and who it’s for. No feeds, no sign-up, nothing else to learn.</p>
@@ -298,17 +309,17 @@ footer a:hover{color:var(--ink)}
       <h2>Everything for the little years, in one place.</h2>
       <p class="intro">Built for tired parents: plain answers to when, where, how far, how much and whether you need to book.</p>
       <div class="flist">
-        <div><h3><span>🗓️</span>A timetable you can search</h3><p>Today’s sessions in time order with walking time, or search the whole week for swimming, rhyme time or a venue.</p></div>
-        <div><h3><span>🧒</span>Right for their age</h3><p>Filter for one child or everyone, from newborn classes to toddler football.</p></div>
-        <div><h3><span>🧸</span>Classes, groups and soft play</h3><p>Sensory, music, swimming, rhyme times, stay and play, cinema screenings and soft play.</p></div>
-        <div><h3><span>🌳</span>Parks and handy places</h3><p>Playgrounds, parks, libraries and baby change, so there’s always a plan B.</p></div>
-        <div><h3><span>🔔</span>One tap to go</h3><p>Directions, the booking page, a reminder before it starts, or straight into your calendar.</p></div>
-        <div><h3><span>🔒</span>No account needed</h3><p>Your postcode, children and saved places stay on your phone. No ads, no tracking.</p></div>
+        <div><h3>A timetable you can search</h3><p>Today’s sessions in time order with walking time, or search the whole week for swimming, rhyme time or a venue.</p></div>
+        <div><h3>Right for their age</h3><p>Filter for one child or everyone, from newborn classes to toddler football.</p></div>
+        <div><h3>Classes, groups and soft play</h3><p>Sensory, music, swimming, rhyme times, stay and play, cinema screenings and soft play.</p></div>
+        <div><h3>Parks and handy places</h3><p>Playgrounds, parks, libraries and baby change, so there’s always a plan B.</p></div>
+        <div><h3>One tap to go</h3><p>Directions, the booking page, a reminder before it starts, or straight into your calendar.</p></div>
+        <div><h3>No account needed</h3><p>Your postcode, children and saved places stay on your phone. No ads, no tracking.</p></div>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="stats">
     <div class="wrap">
       <h2>Across the UK, from day one.</h2>
       <div class="numbers">
