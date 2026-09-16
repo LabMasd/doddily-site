@@ -31,6 +31,9 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--milk);color:var(--ink);font:17px/1.55 var(--text);-webkit-font-smoothing:antialiased}
 a{color:inherit}
+/* Wrapping: headings break evenly, and body copy never drops a lone word onto the last line. */
+h1,h2,h3{text-wrap:balance}
+p,.intro,.fine,figcaption,li,.you-row,.summary-line{text-wrap:pretty}
 :focus-visible{outline:3px solid var(--accent-line);outline-offset:3px;border-radius:6px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:20px}
 
