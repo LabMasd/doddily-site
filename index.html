@@ -160,7 +160,8 @@ body::before{content:"";position:absolute;top:0;left:0;right:0;height:min(1180px
     radial-gradient(38rem 28rem at 94% 78%,rgba(199,181,245,.3),transparent 70%),
     linear-gradient(180deg,#fff 0%,#FCFAFE 14%,#F3EDFE 54%,var(--milk) 100%)}
 main,footer{position:relative;z-index:1}
-.herowrap{position:relative}
+/* The hero carries its own padding, so its wrapper adds none: otherwise the gap above the next section is three paddings deep. */
+.herowrap{position:relative;padding-block:0}
 @media (prefers-reduced-motion:reduce){.herowrap::before{transition:none}}
 /* The screens section reads as one centred column, heading included */
 /* Section titles and their intro line sit centred over the content; the hero is a two-column layout and stays left. */
