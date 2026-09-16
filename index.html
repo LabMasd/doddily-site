@@ -216,11 +216,12 @@ h2{font:700 clamp(30px,4vw,44px)/1.08 var(--display);letter-spacing:-.015em;marg
 @media (max-width:760px){.numbers{grid-template-columns:repeat(2,1fr)}}
 /* Real screens from the app, three across */
 .screens{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 28px;margin:4px auto 0;max-width:820px}
-.screens figure{margin:0;display:grid;gap:16px;justify-items:center}
+.screens figure{margin:0;display:grid;gap:26px;justify-items:center}
 .shot{width:100%;max-width:232px;border-radius:34px;padding:6px;background:linear-gradient(150deg,#454c5e 0%,#1d222d 38%,#141821 62%,#353c4c 100%);box-shadow:inset 0 0 0 1.2px #0c0f15,inset 0 1.2px 0 rgba(255,255,255,.2),0 30px 60px -28px rgba(30,37,54,.5)}
 .shot img{display:block;width:100%;height:auto;border-radius:28px;background:var(--milk)}
 .screens figcaption{font-size:15px;line-height:1.45;color:var(--muted);max-width:32ch;text-align:center}
-.screens b{display:block;color:var(--ink);font:700 16px var(--display);margin-bottom:2px}
+/* The screen name sits in a pill like the selected day in the app. */
+.screens b{display:block;width:fit-content;margin:0 auto 8px;color:var(--ink);font:700 15px var(--display);background:var(--accent);border-radius:999px;padding:5px 14px}
 @media (max-width:760px){.screens{grid-template-columns:1fr;gap:44px}}
 .fine{color:var(--muted);font-size:14px;margin-top:22px}
 
