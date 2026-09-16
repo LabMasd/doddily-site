@@ -56,7 +56,8 @@ a{color:inherit}
 @media (max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding-top:16px}.hero h1{max-width:none}}
 
 /* phone mockup */
-.stage{display:flex;justify-content:center;position:relative;padding:8px 0 28px}
+.stage{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px 0 28px}
+.stage .note{position:relative;z-index:1;margin:14px 0 0;font-size:14px;color:var(--muted);text-align:center}
 .stage::before{content:"";position:absolute;inset:4% -4% 2%;background:radial-gradient(55% 50% at 50% 46%,rgba(199,181,245,.9) 0%,rgba(199,181,245,.35) 45%,transparent 72%);z-index:0}
 .device{position:relative;z-index:1;width:340px;border-radius:60px;padding:11px;background:linear-gradient(150deg,#454c5e 0%,#1d222d 38%,#141821 62%,#353c4c 100%);box-shadow:inset 0 0 0 1.5px #0c0f15,inset 0 1.5px 0 rgba(255,255,255,.22),0 50px 90px -30px rgba(30,37,54,.55),0 20px 40px -20px rgba(30,37,54,.35)}
 .device::before,.device::after{content:"";position:absolute;width:4px;border-radius:3px;background:linear-gradient(90deg,#11151d,#3a4152)}
@@ -73,13 +74,12 @@ a{color:inherit}
 .searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font:500 13.5px var(--text);color:var(--muted)}
 .searchbar svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
 .week{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;margin:10px 0 8px;text-align:center}
-.week div{border-radius:11px;padding:4px 0 5px;font:500 10px var(--text);color:var(--muted)}
+.week button{-webkit-appearance:none;appearance:none;width:100%;border:0;background:none;cursor:pointer;border-radius:11px;padding:4px 0 5px;font:500 10px var(--text);color:var(--muted)}
 .week strong{display:block;font:700 15px/1.15 var(--display);color:var(--ink)}
 .week .on{background:var(--accent);color:var(--ink)}
-.chips{display:flex;gap:6px;overflow:hidden;margin:0 -14px 4px;padding:0 14px}
-.chips span{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font:500 11.5px var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.chips button{-webkit-appearance:none;appearance:none;flex:none;cursor:pointer;color:inherit;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font:500 11.5px var(--text)}
 .chips .on{background:var(--ink);border-color:var(--ink);color:#fff}
-.chips .kid{background:var(--leaf);border-color:var(--leaf);color:#fff}
 .summary-line{font-size:11.5px;color:var(--muted);margin:6px 0 0}
 .s-title{font:700 14px var(--display);margin:10px 0 2px}
 .row{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
@@ -94,12 +94,34 @@ a{color:inherit}
 .tags .free{background:var(--leaf-soft);color:var(--leaf)}
 .tags .drop{background:var(--accent-soft);color:var(--accent-text)}
 .screen::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(rgba(244,246,248,0),var(--milk) 60%);pointer-events:none;z-index:1}
+.screen[data-tab="map"]::after{display:none}
 .tabbar{position:absolute;left:16px;right:16px;bottom:26px;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(223,227,233,.9);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(30,37,54,.14)}
-.tabbar span{display:flex;flex-direction:column;align-items:center;gap:2px;font:600 10px var(--text);color:var(--ink);padding:6px 0 5px;border-radius:999px}
+.tabbar button{-webkit-appearance:none;appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 10px var(--text);color:var(--ink);padding:6px 0 5px;border-radius:999px}
 .tabbar .on{background:#EDEFF3;color:#0A84FF}
 .tabbar svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:124px;height:5px;border-radius:3px;background:var(--ink);z-index:3}
 @media (max-width:380px){.device{transform:scale(.88);transform-origin:top center;margin-bottom:-86px}}
+
+/* mockup screens */
+.screen :focus-visible{outline-width:2px;outline-offset:1px}
+.you-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 2px;border-top:1px solid var(--line);font:600 13px var(--text)}
+.s-title + .you-row{border-top:0}
+.you-row em{font-style:normal;font-weight:500;font-size:12px;color:var(--muted)}
+.map{position:relative;height:466px;margin:6px -14px 0;overflow:hidden;background:#E9EEE9}
+.map::before{content:"";position:absolute;inset:-12%;z-index:1;background:repeating-linear-gradient(72deg,transparent 0 46px,#fff 46px 54px),repeating-linear-gradient(-18deg,transparent 0 62px,#fff 62px 69px)}
+.map::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(rgba(244,246,248,0) 60%,rgba(244,246,248,.7))}
+.map-park{position:absolute;z-index:0;left:-8%;top:6%;width:44%;height:26%;border-radius:45% 55% 50% 48%;background:#DBE8D9}
+.map-park.b{left:auto;right:-10%;top:60%;width:48%;height:30%;border-radius:55% 45% 48% 52%}
+.map-ring{position:absolute;z-index:3;left:50%;top:47%;transform:translate(-50%,-50%);width:214px;height:214px;border-radius:50%;background:rgba(199,181,245,.24);border:1.5px dashed var(--accent-line)}
+.map-you{position:absolute;z-index:4;left:50%;top:47%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:var(--accent-line);box-shadow:0 0 0 3px #fff,0 2px 6px rgba(30,37,54,.3)}
+.pin{position:absolute;z-index:4;transform:translate(-50%,-50%);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid rgba(223,227,233,.9);font-size:14px;box-shadow:0 3px 9px rgba(30,37,54,.22)}
+.week button,.chips button,.tabbar button{transition:background-color .15s ease,color .15s ease}
+.row{animation:rowin .18s ease both}
+@keyframes rowin{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .week button,.chips button,.tabbar button{transition:none}
+  .row{animation:none}
+}
 
 /* flower animation */
 .bloom{transform-origin:50% 50%;animation:breathe 3.2s ease-in-out infinite}
@@ -141,8 +163,8 @@ footer a:hover{color:var(--ink)}
 
 /* cursor: the Doddily bloom, on pointer devices only */
 @media (hover:hover) and (pointer:fine){
-  body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='4.4 4.4 19.2 19.2'%3E%3Cg fill='%23C7B5F5' stroke='%238A6FD6' stroke-width='1.2'%3E%3Ccircle cx='14' cy='8.6' r='3.6'/%3E%3Ccircle cx='19.14' cy='12.33' r='3.6'/%3E%3Ccircle cx='17.17' cy='18.37' r='3.6'/%3E%3Ccircle cx='10.83' cy='18.37' r='3.6'/%3E%3Ccircle cx='8.86' cy='12.33' r='3.6'/%3E%3C/g%3E%3C/svg%3E") 12 12, auto}
-  a,button,.store,.device{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='4.4 4.4 19.2 19.2'%3E%3Cg fill='%238A6FD6' stroke='%234B3A8C' stroke-width='1.2'%3E%3Ccircle cx='14' cy='8.6' r='3.6'/%3E%3Ccircle cx='19.14' cy='12.33' r='3.6'/%3E%3Ccircle cx='17.17' cy='18.37' r='3.6'/%3E%3Ccircle cx='10.83' cy='18.37' r='3.6'/%3E%3Ccircle cx='8.86' cy='12.33' r='3.6'/%3E%3C/g%3E%3C/svg%3E") 14 14, pointer}
+  body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 18 18'%3E%3Cg fill='%238A6FD6'%3E%3Ccircle cx='9' cy='3.6' r='3.6'/%3E%3Ccircle cx='14.14' cy='7.33' r='3.6'/%3E%3Ccircle cx='12.17' cy='13.37' r='3.6'/%3E%3Ccircle cx='5.83' cy='13.37' r='3.6'/%3E%3Ccircle cx='3.86' cy='7.33' r='3.6'/%3E%3C/g%3E%3C/svg%3E") 12 12, auto}
+  a,button,.store,.device{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 18 18'%3E%3Cg fill='%238A6FD6'%3E%3Ccircle cx='9' cy='3.6' r='3.6'/%3E%3Ccircle cx='14.14' cy='7.33' r='3.6'/%3E%3Ccircle cx='12.17' cy='13.37' r='3.6'/%3E%3Ccircle cx='5.83' cy='13.37' r='3.6'/%3E%3Ccircle cx='3.86' cy='7.33' r='3.6'/%3E%3C/g%3E%3C/svg%3E") 14 14, pointer}
   input,textarea{cursor:text}
 }
 </style>
@@ -167,33 +189,65 @@ footer a:hover{color:var(--ink)}
       </div>
     </div>
 
-    <div class="stage" aria-hidden="true">
+    <div class="stage" role="group" aria-label="Example of the Doddily app">
       <div class="device">
         <div class="screen">
           <div class="island"></div>
           <div class="status"><span>9:41</span><span class="icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 16 12"><path d="M8 12 5.4 9.3a3.7 3.7 0 0 1 5.2 0L8 12Zm-4.4-4.5L1.9 5.8a8.6 8.6 0 0 1 12.2 0l-1.7 1.7a6.2 6.2 0 0 0-8.8 0ZM0 3.9A11.3 11.3 0 0 1 16 3.9l-1.7 1.7a8.9 8.9 0 0 0-12.6 0L0 3.9Z"/></svg><svg viewBox="0 0 27 12"><rect x=".6" y=".6" width="23" height="10.8" rx="3.3" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".45"/><rect x="2.2" y="2.2" width="19.8" height="7.6" rx="2"/><path d="M25 4.2v3.6c.8-.3 1.3-1 1.3-1.8S25.8 4.5 25 4.2Z" opacity=".45"/></svg></span></div>
           <div class="app">
-            <div class="app-logo"><span class="wordmark"><span class="o"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</span></div>
-            <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>Search classes, groups and places</div>
-            <div class="week"><div class="on">Today<strong>16</strong></div><div>Thu<strong>17</strong></div><div>Fri<strong>18</strong></div><div>Sat<strong>19</strong></div><div>Sun<strong>20</strong></div><div>Mon<strong>21</strong></div><div>Tue<strong>22</strong></div><div>Week<strong>All</strong></div></div>
-            <div class="chips"><span class="on">Everything</span><span class="kid">Right for Ada (14 months)</span><span>Soft play</span></div>
-            <div class="summary-line">12 sessions today within 3 mi of E8 1EA</div>
-            <div class="s-title">Sessions</div>
-            <div class="row"><div class="t">09:30<small>to 10:15</small></div><div><div class="n">Baby and toddler music <em>6 min walk</em></div><div class="v">Church hall</div><div class="tags"><span>£9</span><span>12–36 months</span></div></div></div>
-            <div class="row"><div class="t">10:00<small>to 10:30</small></div><div><div class="n">Rhyme time <em>9 min walk</em></div><div class="v">Local library</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
-            <div class="row"><div class="t">10:30<small>to 11:30</small></div><div><div class="n">Stay and play <em>14 min walk</em></div><div class="v">Children’s centre</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
-            <div class="row"><div class="t">11:15<small>to 12:00</small></div><div><div class="n">Toddler sensory class <em>1.2 mi</em></div><div class="v">Community centre</div><div class="tags"><span>Term booking</span><span>13–36 months</span></div></div></div>
-            <div class="row"><div class="t">13:30<small>to 14:15</small></div><div><div class="n">Toddler football <em>1.4 mi</em></div><div class="v">Sports hall</div><div class="tags"><span>£8</span><span>18–48 months</span></div></div></div>
+            <div class="app-logo" aria-hidden="true"><span class="wordmark"><span class="o"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</span></div>
+
+            <div data-screen="today">
+              <div class="searchbar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>Search classes, groups and places</div>
+              <div class="week" id="dd-week"></div>
+              <div class="chips" id="dd-chips"></div>
+              <div class="summary-line" id="dd-summary" aria-live="polite"></div>
+              <div class="s-title">Sessions</div>
+              <div id="dd-list"></div>
+            </div>
+
+            <div data-screen="map" hidden>
+              <div class="map" aria-hidden="true">
+                <div class="map-park"></div>
+                <div class="map-park b"></div>
+                <div class="map-ring"></div>
+                <div class="map-you"></div>
+                <div class="pin" style="left:25%;top:25%">🎵</div>
+                <div class="pin" style="left:64%;top:20%">📚</div>
+                <div class="pin" style="left:19%;top:61%">🧸</div>
+                <div class="pin" style="left:73%;top:57%">⚽</div>
+                <div class="pin" style="left:47%;top:75%">🌳</div>
+              </div>
+              <div class="summary-line">Example places within 3 mi of E8 1EA.</div>
+            </div>
+
+            <div data-screen="saved" hidden>
+              <div class="s-title">Saved</div>
+              <div class="row"><div class="t">10:30<small>Fridays</small></div><div><div class="n">Rhyme time <em>9 min walk</em></div><div class="v">Local library</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
+              <div class="row"><div class="t">14:00<small>Saturdays</small></div><div><div class="n">Weekend soft play <em>1.1 mi</em></div><div class="v">Play barn</div><div class="tags"><span>£8</span><span>0–5 years</span></div></div></div>
+              <div class="summary-line">Saved sessions stay on your phone. No account, no sync.</div>
+            </div>
+
+            <div data-screen="you" hidden>
+              <div class="s-title">You</div>
+              <div class="you-row">Postcode <em>E8 1EA</em></div>
+              <div class="you-row">How far <em>3 mi</em></div>
+              <div class="you-row">Children <em>Ada, 14 months</em></div>
+              <div class="you-row">Directions <em>Apple Maps</em></div>
+              <div class="you-row">Reminders <em>30 minutes before</em></div>
+              <div class="summary-line">Your postcode, children and saved places stay on your phone.</div>
+            </div>
           </div>
-          <div class="tabbar">
-            <span class="on"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Today</span>
-            <span><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11.2a6.5 6.5 0 1 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>Map</span>
-            <span><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg>Saved</span>
-            <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.9 3.8-6.2 7.5-6.2s6.7 2.3 7.5 6.2"/></svg>You</span>
+          <div class="tabbar" id="dd-tabs">
+            <button type="button" class="on" data-tab="today" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Today</button>
+            <button type="button" data-tab="map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11.2a6.5 6.5 0 1 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>Map</button>
+            <button type="button" data-tab="saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg>Saved</button>
+            <button type="button" data-tab="you"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.9 3.8-6.2 7.5-6.2s6.7 2.3 7.5 6.2"/></svg>You</button>
           </div>
           <div class="homebar"></div>
         </div>
       </div>
+      <p class="note">These are example sessions, not live listings.</p>
     </div>
   </div>
 
@@ -249,5 +303,174 @@ footer a:hover{color:var(--ink)}
     <span>© 2026 Doddily</span>
   </div>
 </footer>
+<script>
+/* The phone mockup: a small interactive demo built from example data. */
+(function(){
+  var list = document.getElementById('dd-list');
+  if(!list) return;
+  var weekEl = document.getElementById('dd-week'),
+      chipsEl = document.getElementById('dd-chips'),
+      tabsEl = document.getElementById('dd-tabs'),
+      summaryEl = document.getElementById('dd-summary'),
+      screenEl = document.querySelector('.screen'),
+      panels = document.querySelectorAll('[data-screen]');
+
+  /* start, end, name, venue, walk, category, tags */
+  function s(t,e,n,v,w,c,g){return {t:t,e:e,n:n,v:v,w:w,c:c,g:g};}
+  var FREE = ['Free','free'], DROP = ['Drop in','drop'], BOOK = ['Book ahead',''];
+
+  var days = [
+    {label:'Today', num:'16', aria:'Today, Wednesday 16', when:'today', short:'Wed', sessions:[
+      s('09:30','10:15','Baby and toddler music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
+      s('10:00','10:30','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
+      s('10:30','11:30','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
+      s('11:15','12:00','Toddler sensory class','Community centre','1.2 mi','classes',[BOOK,['13\u201336 months','']]),
+      s('15:00','17:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
+    ]},
+    {label:'Thu', num:'17', aria:'Thursday 17', when:'on Thursday', short:'Thu', sessions:[
+      s('09:45','10:30','Baby massage','Yoga studio','11 min walk','classes',[BOOK,['6 weeks\u20139 months','']]),
+      s('10:15','11:00','Baby sensory','Church hall','6 min walk','classes',[['\u00A310',''],['0\u201313 months','']]),
+      s('11:00','12:00','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
+      s('13:30','14:15','Toddler football','Sports hall','1.4 mi','classes',[['\u00A38',''],['18\u201348 months','']]),
+      s('14:30','16:30','Toddler soft play','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
+    ]},
+    {label:'Fri', num:'18', aria:'Friday 18', when:'on Friday', short:'Fri', sessions:[
+      s('09:30','10:15','Parent and baby swim','Leisure centre','1.6 mi','classes',[BOOK,['3 months\u20134 years','']]),
+      s('10:30','11:00','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
+      s('11:00','12:00','Baby group','Community centre','1.2 mi','rhymes',[FREE,DROP]),
+      s('15:30','17:00','Soft play afternoon','Play barn','1.1 mi','softplay',[['\u00A37',''],DROP])
+    ]},
+    {label:'Sat', num:'19', aria:'Saturday 19', when:'on Saturday', short:'Sat', sessions:[
+      s('09:00','09:45','Toddler swim','Leisure centre','1.6 mi','classes',[BOOK,['2\u20134 years','']]),
+      s('10:00','11:30','Little farmers','City farm','2.1 mi','classes',[['\u00A36',''],['18 months\u20135 years','']]),
+      s('10:30','11:15','Saturday music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
+      s('11:00','13:00','Family stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
+      s('14:00','16:00','Weekend soft play','Play barn','1.1 mi','softplay',[['\u00A38',''],['0\u20135 years','']])
+    ]},
+    {label:'Sun', num:'20', aria:'Sunday 20', when:'on Sunday', short:'Sun', sessions:[
+      s('09:30','10:15','Family swim','Leisure centre','1.6 mi','classes',[['\u00A34.50',''],DROP]),
+      s('10:00','11:30','Farm feeding time','City farm','2.1 mi','classes',[FREE,DROP]),
+      s('11:00','12:00','Sunday stay and play','Church hall','6 min walk','rhymes',[FREE,DROP]),
+      s('13:00','15:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A38',''],['0\u20135 years','']])
+    ]},
+    {label:'Mon', num:'21', aria:'Monday 21', when:'on Monday', short:'Mon', sessions:[
+      s('09:30','10:15','Baby and toddler music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
+      s('10:00','11:00','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
+      s('10:45','11:15','Baby rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
+      s('13:15','14:00','Toddler swim','Leisure centre','1.6 mi','classes',[BOOK,['2\u20134 years','']]),
+      s('15:00','17:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
+    ]},
+    {label:'Tue', num:'22', aria:'Tuesday 22', when:'on Tuesday', short:'Tue', sessions:[
+      s('10:00','10:45','Toddler sensory class','Community centre','1.2 mi','classes',[BOOK,['13\u201336 months','']]),
+      s('10:30','11:00','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
+      s('11:30','12:30','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
+      s('14:00','16:00','Baby soft play hour','Play barn','1.1 mi','softplay',[['\u00A36',''],['0\u20132 years','']])
+    ]},
+    {label:'Week', num:'All', aria:'The whole week', when:'this week', short:'', all:true}
+  ];
+
+  var filters = [
+    {id:'all', label:'Everything'},
+    {id:'rhymes', label:'Rhymes & stay and play'},
+    {id:'classes', label:'Classes'},
+    {id:'softplay', label:'Soft play'}
+  ];
+
+  var dayIndex = 0, filterId = 'all';
+
+  weekEl.innerHTML = days.map(function(d, i){
+    return '<button type="button" data-day="' + i + '" aria-label="' + d.aria + '" aria-pressed="' +
+      (i === 0) + '"' + (i === 0 ? ' class="on"' : '') + '>' + d.label + '<strong>' + d.num + '</strong></button>';
+  }).join('');
+
+  chipsEl.innerHTML = filters.map(function(f){
+    return '<button type="button" data-cat="' + f.id + '" aria-pressed="' + (f.id === 'all') + '"' +
+      (f.id === 'all' ? ' class="on"' : '') + '>' + f.label + '</button>';
+  }).join('');
+
+  function tagsHtml(g){
+    return g.map(function(t){
+      return t[1] ? '<span class="' + t[1] + '">' + t[0] + '</span>' : '<span>' + t[0] + '</span>';
+    }).join('');
+  }
+
+  function rowHtml(item){
+    var x = item.s;
+    return '<div class="row"><div class="t">' + x.t + '<small>to ' + x.e + '</small></div>' +
+      '<div><div class="n">' + x.n + ' <em>' + x.w + '</em></div>' +
+      '<div class="v">' + x.v + (item.day ? ' \u00B7 ' + item.day : '') + '</div>' +
+      '<div class="tags">' + tagsHtml(x.g) + '</div></div></div>';
+  }
+
+  function render(){
+    var day = days[dayIndex], items = [];
+    if(day.all){
+      days.forEach(function(d){
+        if(!d.sessions) return;
+        d.sessions.forEach(function(x){ items.push({s:x, day:d.short}); });
+      });
+    } else {
+      day.sessions.forEach(function(x){ items.push({s:x, day:''}); });
+    }
+    var shown = items.filter(function(i){ return filterId === 'all' || i.s.c === filterId; });
+
+    list.innerHTML = shown.length
+      ? shown.map(rowHtml).join('')
+      : '<div class="row"><div class="t">\u2014</div><div><div class="n">Nothing in this filter</div>' +
+        '<div class="v">Try Everything, or another day.</div></div></div>';
+
+    var where = ' within 3 mi of E8 1EA';
+    var text;
+    if(!shown.length){
+      text = 'No sessions ' + day.when + where;
+    } else if(filterId === 'all'){
+      text = shown.length + (shown.length === 1 ? ' session ' : ' sessions ') + day.when + where;
+    } else {
+      text = shown.length + ' of ' + items.length + ' sessions ' + day.when + where;
+    }
+    summaryEl.textContent = text;
+  }
+
+  function press(container, attr, value){
+    container.querySelectorAll('button').forEach(function(b){
+      var on = b.getAttribute(attr) === value;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on);
+    });
+  }
+
+  weekEl.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-day]');
+    if(!b) return;
+    dayIndex = +b.getAttribute('data-day');
+    press(weekEl, 'data-day', b.getAttribute('data-day'));
+    render();
+  });
+
+  chipsEl.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-cat]');
+    if(!b) return;
+    filterId = b.getAttribute('data-cat');
+    press(chipsEl, 'data-cat', filterId);
+    render();
+  });
+
+  tabsEl.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-tab]');
+    if(!b) return;
+    var name = b.getAttribute('data-tab');
+    tabsEl.querySelectorAll('button').forEach(function(x){
+      var on = x.getAttribute('data-tab') === name;
+      x.classList.toggle('on', on);
+      if(on){ x.setAttribute('aria-current', 'page'); } else { x.removeAttribute('aria-current'); }
+    });
+    panels.forEach(function(p){ p.hidden = p.getAttribute('data-screen') !== name; });
+    screenEl.setAttribute('data-tab', name);
+  });
+
+  screenEl.setAttribute('data-tab', 'today');
+  render();
+})();
+</script>
 </body>
 </html>
