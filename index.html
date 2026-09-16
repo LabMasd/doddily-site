@@ -150,6 +150,8 @@ button.row:hover .n,button.row:focus-visible .n{color:var(--accent-text)}
 
 /* sections */
 section{padding-block:72px}
+/* How it works: the block is drawn 86px higher so it sits centred between the hero and the next section. A transform, so nothing else on the page moves. */
+#how .wrap{transform:translateY(-86px)}
 .tint{background:var(--accent-soft)}
 /* Hero wash: purple field with a bloom that follows the cursor */
 body{position:relative}
