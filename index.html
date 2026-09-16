@@ -175,6 +175,18 @@ h2{font:700 clamp(30px,4vw,44px)/1.08 var(--display);letter-spacing:-.015em;marg
 .steps p{margin:0;color:var(--muted)}
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
 
+/* what one tap does: the buttons under a class, bigger */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px}
+.act{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 18px 16px}
+.act .ic{width:44px;height:44px;border-radius:13px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent-text)}
+.act svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.act h3{font:700 18px var(--display);margin:3px 0 4px}
+.act p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.45}
+.act-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.act-chips span{font:500 12px var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:var(--milk)}
+.act-chips .on{background:var(--ink);border-color:var(--ink);color:#fff}
+@media (max-width:900px){.acts{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.acts{grid-template-columns:1fr}}
 .features{background:var(--card);border-block:1px solid var(--line)}
 .flist{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
 .flist div{padding:22px 0;border-top:3px solid var(--line)}
@@ -346,6 +358,21 @@ footer a:hover{color:var(--ink)}
     </div>
   </section>
 
+  <section id="tap">
+    <div class="wrap">
+      <h2>Found one? One tap does the rest.</h2>
+      <p class="intro">Everything you’d normally dig out of five other apps sits right under the class, the same as in the phone above.</p>
+      <div class="acts">
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/><path d="M9.5 13.5v-2h5l-1.7-1.7M14.5 11.5l-1.7 1.7"/></svg></div><div><h3>Directions</h3><p>Walking directions in the maps app you actually use. Pick it once, in You.</p><div class="act-chips"><span class="on">Apple Maps</span><span>Google Maps</span><span>Waze</span><span>Citymapper</span></div></div></div>
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg></div><div><h3>Save</h3><p>Keep a shortlist for the week. It lives on your phone, not on a server.</p></div></div>
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 13 6 9z"/><path d="M10 18a2 2 0 0 0 4 0"/></svg></div><div><h3>Remind me</h3><p>A nudge before it starts, so you leave the house on time.</p></div></div>
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div><div><h3>Add to calendar</h3><p>Straight into your calendar with the times filled in. It never reads your events.</p></div></div>
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg></div><div><h3>Send</h3><p>Share a class with your partner or the group chat, with a link back to the provider.</p></div></div>
+        <div class="act"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4 5.2 2 2 0 0 1 6 3z"/></svg></div><div><h3>Book or call</h3><p>The booking page or the venue’s number, without hunting for either.</p></div></div>
+      </div>
+    </div>
+  </section>
+
   <section class="features">
     <div class="wrap">
       <h2>Everything for the little years, in one place.</h2>
@@ -355,7 +382,7 @@ footer a:hover{color:var(--ink)}
         <div><h3>Right for their age</h3><p>Add every child, then show the day for one of them or all of them together, from newborn classes to toddler football.</p></div>
         <div><h3>Classes, groups and soft play</h3><p>Sensory, music, swimming, rhyme times, stay and play, cinema screenings and soft play.</p></div>
         <div><h3>Parks and handy places</h3><p>Playgrounds, parks, libraries and baby change, so there’s always a plan B.</p></div>
-        <div><h3>One tap to go</h3><p>Directions, the booking page, a reminder before it starts, or straight into your calendar.</p></div>
+        <div><h3>Times you can check</h3><p>Every listing links back to the provider’s own page, so you can confirm before you set off.</p></div>
         <div><h3>No account needed</h3><p>Your postcode, children and saved places stay on your phone. No ads, no tracking.</p></div>
       </div>
     </div>
