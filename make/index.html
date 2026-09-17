@@ -203,8 +203,7 @@ button,input,textarea{font:inherit;color:inherit}
     var scale=1, topB, subB, obj, objH, topH;
     for(var tries=0; tries<8; tries++){
       var y0=top; topH=0;
-      if(story) topH += .9*U + 5*U;                       // the three story bars
-      else if(t==='statement' || t==='numbers') topH += 6.2*U + 0; // brand sits at the top
+      if(!story && (t==='statement' || t==='numbers')) topH += 6.2*U; // on a feed post the brand sits at the top
       if(t==='step') topH += 20*U*.8*scale + 4*U;
       topB = (t==='numbers') ? null : headline(d.big, innerW, story, scale, t==='step');
       subB = (t==='statement'||t==='screen') ? subline(d.sub, innerW*.86, scale) : null;
@@ -219,7 +218,6 @@ button,input,textarea{font:inherit;color:inherit}
     }
 
     var y=top;
-    if(story){ for(var i=0;i<3;i++){ ctx.globalAlpha=i===0?.95:.3; ctx.fillStyle=fg; var bw=(innerW-2*U)/3; rr(padX+i*(bw+U), y, bw, .9*U, .45*U); ctx.fill(); } ctx.globalAlpha=1; y += .9*U + 5*U; }
     var footY = bottom-footH;
 
     if(t==='statement'){
