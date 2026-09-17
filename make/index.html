@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Doddily post maker</title>
+<!-- A private tool: not linked from the site, and kept out of search. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F4F6F8">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --milk:#F4F6F8; --card:#fff; --ink:#1E2536; --muted:#5F6878; --line:#DFE3E9;
+  --accent:#C7B5F5; --accent-line:#8A6FD6; --accent-soft:#F0EAFE; --accent-text:#4B3A8C;
+  --display:"Bricolage Grotesque", ui-rounded, system-ui, sans-serif;
+  --text:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--milk);color:var(--ink);font:16px/1.45 var(--text);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent-line);outline-offset:2px;border-radius:8px}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.wordmark{display:inline-flex;align-items:center;gap:8px;font:700 20px/1 var(--display)}
+.wordmark i{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--ink)}
+.wordmark svg{width:18px;height:18px;fill:var(--accent)}
+.top small{font:500 13px var(--text);color:var(--muted)}
+
+.app{display:grid;gap:0;max-width:1080px;margin:0 auto}
+/* The preview stays in view while you type, so the keyboard never hides what you are making. */
+.stage{position:sticky;top:0;z-index:5;background:var(--milk);padding:4px 16px 12px;border-bottom:1px solid var(--line)}
+.canvasbox{position:relative;margin:0 auto;height:42vh;min-height:230px;max-height:520px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(30,37,54,.35),0 0 0 1px rgba(30,37,54,.06)}
+.canvasbox.story{aspect-ratio:9/16}
+.canvasbox canvas{display:block;width:100%;height:100%}
+/* Where Instagram puts its own buttons on a Story. Shown on the preview only, never in the image. */
+.guides{position:absolute;inset:0;pointer-events:none}
+.guides::before,.guides::after{content:"";position:absolute;left:0;right:0;background:repeating-linear-gradient(135deg,rgba(255,80,80,.22) 0 8px,rgba(255,80,80,.08) 8px 16px)}
+.guides::before{top:0;height:13%}
+.guides::after{bottom:0;height:14.6%}
+
+.controls{padding:14px 16px 120px;display:grid;gap:18px}
+.group{display:grid;gap:8px}
+.label{font:600 13px var(--text);color:var(--muted)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;background:#E9ECF1;border-radius:12px;padding:4px}
+.seg button{border:0;background:none;border-radius:9px;padding:9px 8px;font:600 14px var(--text);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);box-shadow:0 1px 3px rgba(30,37,54,.16)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font:600 14px var(--text);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.swatches{display:flex;gap:10px}
+.swatches button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);cursor:pointer;padding:0}
+.swatches button[aria-pressed="true"]{outline:3px solid var(--accent-line);outline-offset:2px}
+.field{display:grid;gap:5px}
+.field input,.field textarea,.row input{width:100%;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:11px 12px;font:500 16px var(--text)}
+.field textarea{min-height:76px;resize:vertical;line-height:1.35}
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:58px 1fr;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px}
+.row .wide{grid-column:1/-1;display:grid;grid-template-columns:1fr 88px;gap:6px}
+.row input{border-radius:9px;padding:9px 10px;background:var(--milk)}
+.shots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.shots button{border:2px solid transparent;background:var(--card);border-radius:12px;padding:3px;cursor:pointer}
+.shots button[aria-pressed="true"]{border-color:var(--accent-line)}
+.shots img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top;border-radius:8px}
+.shots span{display:block;font:600 11px var(--text);margin-top:3px}
+.check{display:flex;align-items:center;gap:8px;font:500 14px var(--text)}
+.check input{width:18px;height:18px;accent-color:var(--accent-line)}
+.linkbtn{justify-self:start;border:0;background:none;color:var(--accent-text);font:600 14px var(--text);padding:4px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+.actionbar{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(rgba(244,246,248,0),var(--milk) 34%);display:flex;gap:8px;justify-content:center}
+.actionbar button{border:0;border-radius:999px;padding:14px 22px;font:700 16px var(--text);cursor:pointer}
+.primary{background:var(--ink);color:#fff;flex:1;max-width:420px}
+.secondary{background:var(--card);border:1px solid var(--line)!important}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:9px 16px;font:600 14px var(--text);z-index:7}
+
+@media (min-width:860px){
+  .app{grid-template-columns:minmax(0,1fr) 420px;gap:28px;padding:0 24px}
+  .stage{border-bottom:0;padding:8px 0 0;top:12px;align-self:start}
+  .canvasbox{height:min(78vh,760px);max-height:none}
+  .controls{padding:8px 0 120px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="wordmark"><i><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></svg></i>Post maker</span>
+  <small>Type, check, share.</small>
+</header>
+
+<main class="app">
+  <section class="stage" aria-label="Preview">
+    <div class="canvasbox" id="box"><canvas id="c" width="1080" height="1350" role="img" aria-label="Preview of the post"></canvas><div class="guides" id="guides" hidden></div></div>
+  </section>
+
+  <section class="controls" aria-label="Post settings">
+    <div class="group"><span class="label">Where it is going</span>
+      <div class="seg" id="format"><button type="button" data-v="feed">Feed post 4:5</button><button type="button" data-v="story">Story 9:16</button></div>
+    </div>
+    <div class="group"><span class="label">Template</span><div class="chips" id="templates"></div></div>
+    <div class="group"><span class="label">Background</span><div class="swatches" id="bgs"></div></div>
+    <div id="fields" class="group" style="gap:12px"></div>
+    <label class="check" id="guidewrap" hidden><input type="checkbox" id="guidetoggle"> Show the areas Instagram covers on a Story</label>
+    <button type="button" class="linkbtn" id="reset">Put the example words back</button>
+  </section>
+</main>
+
+<div class="actionbar">
+  <button type="button" class="primary" id="share">Share or save image</button>
+  <button type="button" class="secondary" id="download" aria-label="Download the image">Download</button>
+</div>
+
+<script>
+/* Doddily post maker: fills the brand's post templates on a canvas and hands back a PNG.
+   Canvas rather than HTML-to-image, because it has to work on an iPhone every time. */
+(function(){
+  var P = { milk:'#F4F6F8', ink:'#1E2536', accent:'#C7B5F5', line:'#8A6FD6', soft:'#F0EAFE', text:'#4B3A8C', leaf:'#2F7A52', leafsoft:'#E3F2EA', muted:'#667085', rule:'#DFE3E9' };
+  var BG = { ink:{bg:P.ink,fg:'#fff'}, purple:{bg:P.accent,fg:P.ink}, soft:{bg:P.soft,fg:P.ink}, milk:{bg:P.milk,fg:P.ink} };
+  var DISPLAY = '"Bricolage Grotesque", sans-serif', TEXT = '"Figtree", sans-serif';
+  var SHOTS = [['today','Today'],['class','A class'],['map','Map'],['saved','Saved'],['you','You']];
+
+  var TEMPLATES = {
+    statement: { name:'Big words', bg:'purple', fields:[['big','Headline','area'],['sub','Smaller line (optional)','area'],['foot','Small note at the bottom (optional)','text'],['bloom','Flower in the corner','check']],
+      sample:{ big:'Everything within a nap’s walk.', sub:'Set your distance and Doddily only shows what you can reach with the buggy.', foot:'', bloom:true } },
+    list: { name:'List card', bg:'soft', fields:[['big','Headline','area'],['chips','Tags above the list, separated by commas (optional)','text'],['rows','Rows','rows'],['foot','Small note at the bottom (optional)','text']],
+      sample:{ big:'Some of the best things going are free.', chips:'Free, No booking, Rainy day', foot:'', rows:[{e:'🧸',n:'Stay and play',v:'Family hub',t:'9:30',tag:'Free'},{e:'📚',n:'Rhymes and stories',v:'Local library',t:'10:30',tag:'Free'},{e:'',n:'',v:'',t:'',tag:''}] } },
+    numbers: { name:'Numbers', bg:'ink', fields:[['n1','First number','text'],['l1','What it counts','text'],['n2','Second number (optional)','text'],['l2','What it counts','text'],['foot','Small note at the bottom (optional)','text']],
+      sample:{ n1:'13,000+', l1:'baby and toddler classes and groups', n2:'900+', l2:'soft play centres', foot:'' } },
+    step: { name:'Step', bg:'milk', fields:[['n','Step number','text'],['big','What to do','area'],['of','Out of how many steps','text']],
+      sample:{ n:'1', big:'Add your postcode and how far you’ll go.', of:'3' } },
+    screen: { name:'App screen', bg:'soft', fields:[['big','Headline','area'],['sub','Smaller line (optional)','area'],['shot','Which screen','shots'],['foot','Small note (optional)','text']],
+      sample:{ big:'Tap a class, get the whole story.', sub:'Times, price, ages and how to book.', shot:'class', foot:'' } },
+    poll: { name:'Poll or question', bg:'purple', fields:[['big','Headline','area'],['q','The question on the card','text'],['a','First answer','text'],['b','Second answer (leave empty for a question box)','text'],['foot','Small note (optional)','text']],
+      sample:{ big:'Rainy Tuesday. What’s the plan?', q:'Pick one', a:'Soft play', b:'Library rhyme time', foot:'' } }
+  };
+
+  // ---------- state ----------
+  var KEY = 'doddily:make:v1', state;
+  function fresh(){ var s = { format:'feed', template:'statement', bg:{}, data:{} }; Object.keys(TEMPLATES).forEach(function(k){ s.bg[k]=TEMPLATES[k].bg; s.data[k]=JSON.parse(JSON.stringify(TEMPLATES[k].sample)); }); return s; }
+  try { state = JSON.parse(localStorage.getItem(KEY)); } catch(e) {}
+  if (!state || !state.data) state = fresh();
+  Object.keys(TEMPLATES).forEach(function(k){ if(!state.data[k]) state.data[k]=JSON.parse(JSON.stringify(TEMPLATES[k].sample)); if(!state.bg[k]) state.bg[k]=TEMPLATES[k].bg; });
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+
+  // ---------- images ----------
+  var imgs = {};
+  SHOTS.forEach(function(s){ var im = new Image(); im.onload = function(){ draw(); }; im.src = 'shots/' + s[0] + '.jpg'; imgs[s[0]] = im; });
+
+  // ---------- canvas helpers ----------
+  var canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+  var W = 1080, H = 1350, U = 10.8;
+  function font(weight, sizeU, family){ ctx.font = weight + ' ' + (sizeU*U) + 'px ' + family; }
+  function track(em, sizeU){ if ('letterSpacing' in ctx) ctx.letterSpacing = (em*sizeU*U).toFixed(2) + 'px'; }
+  function rr(x,y,w,h,r){ r=Math.min(r,w/2,h/2); ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function flower(cx, cy, size, fill, alpha){ var k=size/18; ctx.save(); ctx.globalAlpha = alpha==null?1:alpha; ctx.fillStyle=fill; [[9,3.6],[14.14,7.33],[12.17,13.37],[5.83,13.37],[3.86,7.33]].forEach(function(p){ ctx.beginPath(); ctx.arc(cx-size/2+p[0]*k, cy-size/2+p[1]*k, 3.6*k, 0, Math.PI*2); ctx.fill(); }); ctx.restore(); }
+
+  function greedy(words, maxW){ var lines=[], cur=''; words.forEach(function(w){ var t = cur ? cur+' '+w : w; if (ctx.measureText(t).width <= maxW || !cur) cur=t; else { lines.push(cur); cur=w; } }); if(cur) lines.push(cur); return lines; }
+  // Balanced wrapping, like CSS text-wrap: balance: the narrowest width that keeps the same number of lines.
+  function wrap(text, maxW){ var out=[]; String(text||'').split('\n').forEach(function(par){ var words=par.trim().split(/\s+/).filter(Boolean); if(!words.length){ out.push(''); return; } var n=greedy(words,maxW).length, lo=0, hi=maxW; for(var i=0;i<14;i++){ var mid=(lo+hi)/2; if(greedy(words,mid).length<=n && greedy(words,mid).every(function(l){return ctx.measureText(l).width<=maxW;})) hi=mid; else lo=mid; } greedy(words,hi).forEach(function(l){ out.push(l); }); }); return out; }
+  function block(text, o){ font(o.weight,o.size,o.family); track(o.track||0,o.size); var lines = text ? wrap(text,o.maxW) : []; return { lines:lines, o:o, h: lines.length*o.size*U*o.lh }; }
+  function paint(b, x, y, color, align){ var o=b.o; font(o.weight,o.size,o.family); track(o.track||0,o.size); ctx.fillStyle=color; ctx.textBaseline='alphabetic'; ctx.textAlign=align||'left'; var lhpx=o.size*U*o.lh; b.lines.forEach(function(l,i){ ctx.fillText(l, x, y + i*lhpx + lhpx*0.5 + o.size*U*0.35); }); track(0,o.size); ctx.textAlign='left'; }
+  function fit(s, maxW){ if(ctx.measureText(s).width<=maxW) return s; while(s.length>1 && ctx.measureText(s+'…').width>maxW) s=s.slice(0,-1); return s.trim()+'…'; }
+
+  function brand(x, y, theme, measureOnly){ var tile=6.2*U; font(700,4.4,DISPLAY); var w = tile + 2*U + ctx.measureText('Doddily').width; if(measureOnly) return {w:w,h:tile}; var onInk = theme.bg===P.ink; ctx.fillStyle = onInk?P.accent:P.ink; rr(x,y,tile,tile,1.8*U); ctx.fill(); flower(x+tile/2,y+tile/2,3.9*U,onInk?P.ink:P.accent); ctx.fillStyle=theme.fg; ctx.textBaseline='middle'; font(700,4.4,DISPLAY); ctx.fillText('Doddily', x+tile+2*U, y+tile/2+0.2*U); return {w:w,h:tile}; }
+  function dots(xRight, yMid, on, total, color){ var d=1.7*U, gap=1.3*U, w=total*d+(total-1)*gap, x=xRight-w; for(var i=0;i<total;i++){ ctx.globalAlpha = i===on?1:.3; ctx.fillStyle=color; ctx.beginPath(); ctx.arc(x+d/2+i*(d+gap), yMid, d/2, 0, Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
+  function bloom(theme, alpha){ var s=44*U, light = theme.bg===P.soft || theme.bg===P.accent; flower(W+11*U-s/2, H+11*U-s/2, s, light?'#fff':P.accent, alpha!=null?alpha:(light?.55:.9)); }
+
+  // A white card holding tags and rows, as in the app.
+  function cardSpec(d, innerW){ var rows=(d.rows||[]).filter(function(r){return r.n;}); var chips=String(d.chips||'').split(',').map(function(s){return s.trim();}).filter(Boolean); var pad=3.4*U, h=pad; if(chips.length) h += 5.4*U + 2.2*U; rows.forEach(function(r,i){ if(i>0) h += 2.2*U + 2*U; h += 4.1*U + 3.7*U + (r.tag?4.4*U:0); }); h += pad - (rows.length||chips.length?0:pad); return { rows:rows, chips:chips, h: (rows.length||chips.length)? h : 0, w:innerW }; }
+  function drawCard(c, x, y){ if(!c.h) return; var pad=3.4*U; ctx.save(); ctx.shadowColor='rgba(30,37,54,.16)'; ctx.shadowBlur=6*U; ctx.shadowOffsetY=2*U; ctx.fillStyle='#fff'; rr(x,y,c.w,c.h,3.6*U); ctx.fill(); ctx.restore(); var cy=y+pad, cx=x+pad, iw=c.w-pad*2;
+    if(c.chips.length){ var px=cx; font(600,3,TEXT); c.chips.forEach(function(t,i){ var w=ctx.measureText(t).width+4.8*U, hh=5.4*U; if(px+w>cx+iw) return; var leaf=/^(free|no booking)$/i.test(t); ctx.fillStyle = leaf?P.leaf:(i===0?P.ink:'#fff'); rr(px,cy,w,hh,hh/2); ctx.fill(); if(!leaf && i!==0){ ctx.strokeStyle=P.rule; ctx.lineWidth=.3*U; rr(px,cy,w,hh,hh/2); ctx.stroke(); } ctx.fillStyle = (leaf||i===0)?'#fff':P.ink; ctx.textBaseline='middle'; ctx.fillText(t, px+2.4*U, cy+hh/2+.1*U); px += w+1.5*U; }); cy += 5.4*U + 2.2*U; }
+    c.rows.forEach(function(r,i){ if(i>0){ ctx.fillStyle=P.rule; ctx.fillRect(cx,cy+1.1*U,iw,.3*U); cy += 2.2*U + 2*U; } var ex = r.e?6.8*U:0; ctx.textBaseline='alphabetic'; if(r.e){ ctx.font=(4.6*U)+'px '+TEXT; ctx.fillStyle=P.ink; ctx.fillText(r.e, cx, cy+4.3*U); } font(700,3.1,TEXT); var tw = r.t?ctx.measureText(r.t).width:0; if(r.t){ ctx.fillStyle=P.ink; ctx.textAlign='right'; ctx.fillText(r.t, cx+iw, cy+3.4*U); ctx.textAlign='left'; } font(700,3.4,TEXT); ctx.fillStyle=P.ink; ctx.fillText(fit(r.n, iw-ex-tw-2*U), cx+ex, cy+3.4*U); font(400,2.8,TEXT); ctx.fillStyle=P.muted; var vy=cy+4.1*U+2.7*U; ctx.fillText(fit(r.v||'', iw-ex), cx+ex, vy); cy += 4.1*U + 3.7*U; if(r.tag){ font(600,2.5,TEXT); var gw=ctx.measureText(r.tag).width+3.4*U; ctx.fillStyle=P.leafsoft; rr(cx+ex,cy+.6*U,gw,3.6*U,1.8*U); ctx.fill(); ctx.fillStyle=P.leaf; ctx.textBaseline='middle'; ctx.fillText(r.tag,cx+ex+1.7*U,cy+2.45*U); cy += 4.4*U; } }); }
+
+  function stickerSpec(d, w){ var pad=3.4*U; font(700,4,TEXT); var q = d.q ? wrap(d.q, w-pad*2) : []; var opts = d.b ? [d.a,d.b] : [d.a || '']; var oh = 3.4*U*1.2 + 4.4*U; var h = pad + q.length*4*U*1.25 + (q.length?2.2*U:0) + opts.length*oh + (opts.length-1)*1.6*U + pad; return { q:q, opts:opts, isBox:!d.b, w:w, h:h, oh:oh }; }
+  function drawSticker(s, x, y){ var pad=3.4*U; ctx.save(); ctx.shadowColor='rgba(30,37,54,.2)'; ctx.shadowBlur=6*U; ctx.shadowOffsetY=2*U; ctx.fillStyle='#fff'; rr(x,y,s.w,s.h,4*U); ctx.fill(); ctx.restore(); var cy=y+pad; font(700,4,TEXT); ctx.fillStyle=P.ink; ctx.textBaseline='alphabetic'; s.q.forEach(function(l){ ctx.fillText(l, x+pad, cy+4*U); cy += 4*U*1.25; }); if(s.q.length) cy += 2.2*U; s.opts.forEach(function(o,i){ var picked = !s.isBox && i===0; if(picked){ ctx.fillStyle=P.accent; rr(x+pad,cy,s.w-pad*2,s.oh,s.oh/2); ctx.fill(); } else { ctx.strokeStyle=P.rule; ctx.lineWidth=.36*U; rr(x+pad,cy,s.w-pad*2,s.oh,s.oh/2); ctx.stroke(); } font(600,3.4,TEXT); ctx.fillStyle = s.isBox?P.muted:P.ink; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(s.isBox ? (o || 'Type something…') : fit(o, s.w-pad*2-6*U), x+s.w/2, cy+s.oh/2+.1*U); ctx.textAlign='left'; cy += s.oh+1.6*U; }); }
+
+  // The phone: bezel, rounded screen, and the screenshot shown from its top.
+  function drawPhone(img, x, y, w, h, openBottom){ var bez=1*U, R=(openBottom?11:9.6)*U; ctx.save(); ctx.shadowColor='rgba(30,37,54,.38)'; ctx.shadowBlur=14*U; ctx.shadowOffsetY=5*U; var g=ctx.createLinearGradient(x,y,x+w,y+h); g.addColorStop(0,'#6b7385'); g.addColorStop(.3,'#20252f'); g.addColorStop(.62,'#12161e'); g.addColorStop(1,'#4a5162'); ctx.fillStyle=g; rr(x,y,w,h+(openBottom?R:0),R); ctx.fill(); ctx.restore(); ctx.save(); rr(x+bez,y+bez,w-bez*2,h-bez*(openBottom?1:2)+(openBottom?R:0),R-bez); ctx.clip(); ctx.fillStyle=P.milk; ctx.fillRect(x,y,w,h+R); if(img && img.complete && img.naturalWidth){ var iw=w-bez*2, ih=iw*img.naturalHeight/img.naturalWidth; ctx.drawImage(img, x+bez, y+bez, iw, ih); } ctx.restore(); }
+
+  // ---------- the templates ----------
+  function headline(text, maxW, story, scale, forceMid){ var mid = forceMid || String(text||'').length > 64; var size = (mid?6.6:(story?8.4:10))*scale; return block(text, { weight: mid?700:800, size:size, lh: mid?1.08:.98, track: mid?-.02:-.03, family:DISPLAY, maxW:maxW }); }
+  function subline(text, maxW, scale){ return block(text, { weight:600, size:4.2*scale, lh:1.35, family:TEXT, maxW:maxW }); }
+
+  function draw(){
+    var story = state.format==='story', t=state.template, d=state.data[t], theme=BG[state.bg[t]]||BG.milk;
+    W=1080; H=story?1920:1350; if(canvas.height!==H){ canvas.height=H; }
+    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,W,H); ctx.fillStyle=theme.bg; ctx.fillRect(0,0,W,H);
+    var padX=8*U, top=(story?19:8)*U, bottom=H-(story?25:8)*U, innerW=W-padX*2, footH=6.2*U;
+    var fg=theme.fg;
+
+    if(t==='screen' && !story){ // the phone runs off the bottom of a feed post
+      brand(padX, top, theme); if(d.foot){ font(600,3.2,TEXT); ctx.fillStyle=fg; ctx.globalAlpha=.65; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillText(fit(d.foot,innerW*.5), W-padX, top+3.1*U); ctx.textAlign='left'; ctx.globalAlpha=1; }
+      var y=top+6.2*U+3*U, hb=headline(d.big,innerW,false,1), sb=subline(d.sub,innerW*.88,1);
+      paint(hb,padX,y,fg); y+=hb.h; if(sb.lines.length){ y+=2.4*U; paint(sb,padX,y,fg); y+=sb.h; }
+      y+=4*U; var pw=74*U; drawPhone(imgs[d.shot], (W-pw)/2, y, pw, H-y, true); return finish();
+    }
+
+    // Everything else: a top block, an object in the middle, a foot at the bottom.
+    var scale=1, topB, subB, obj, objH, topH;
+    for(var tries=0; tries<8; tries++){
+      var y0=top; topH=0;
+      if(story) topH += .9*U + 5*U;                       // the three story bars
+      else if(t==='statement' || t==='numbers') topH += 6.2*U + 0; // brand sits at the top
+      if(t==='step') topH += 20*U*.8*scale + 4*U;
+      topB = (t==='numbers') ? null : headline(d.big, innerW, story, scale, t==='step');
+      subB = (t==='statement'||t==='screen') ? subline(d.sub, innerW*.86, scale) : null;
+      objH=0; obj=null;
+      if(t==='list'){ obj=cardSpec(d, innerW); objH=obj.h; }
+      if(t==='poll'){ obj=stickerSpec(d, innerW); objH=obj.h; }
+      if(t==='numbers'){ objH = (12*U*.95 + .4*U + 3.6*U*1.3)*scale*(d.n2?2:1) + (d.n2?4.5*U:0); }
+      if(t==='screen'){ objH = 40*U; }                   // at least this much phone
+      var textH = (topB?topB.h:0) + (subB&&subB.lines.length ? 3*U+subB.h : 0);
+      var need = topH + textH + (objH? 4*U+objH : 0) + 4*U + footH;
+      if(need <= bottom-top || scale<.62) break; scale*=.92;
+    }
+
+    var y=top;
+    if(story){ for(var i=0;i<3;i++){ ctx.globalAlpha=i===0?.95:.3; ctx.fillStyle=fg; var bw=(innerW-2*U)/3; rr(padX+i*(bw+U), y, bw, .9*U, .45*U); ctx.fill(); } ctx.globalAlpha=1; y += .9*U + 5*U; }
+    var footY = bottom-footH;
+
+    if(t==='statement'){
+      if(!story){ brand(padX,y,theme); y+=6.2*U; }
+      var th = topB.h + (subB.lines.length?3*U+subB.h:0); var ty = story ? y : y + Math.max(4*U, (footY - y - th)/2);
+      paint(topB,padX,ty,fg); if(subB.lines.length) paint(subB,padX,ty+topB.h+3*U,fg);
+      if(d.bloom!==false) bloom(theme);
+      if(story) brand(padX,footY,theme);
+      note(d.foot, story?'right':'left');
+    }
+    if(t==='list' || t==='poll'){
+      paint(topB,padX,y,fg); y+=topB.h;
+      var oy = y + Math.max(4*U, (footY - y - objH)/2); if(t==='list') drawCard(obj,padX,oy); else drawSticker(obj,padX,oy);
+      brand(padX,footY,theme); note(d.foot,'right');
+    }
+    if(t==='numbers'){
+      if(!story){ brand(padX,y,theme); y+=6.2*U; }
+      bloom(theme,.22);
+      var ny = y + Math.max(4*U,(footY - y - objH)/2); [[d.n1,d.l1],[d.n2,d.l2]].forEach(function(p){ if(!p[0]) return; font(800,12*scale,DISPLAY); track(-.03,12*scale); ctx.fillStyle=fg; ctx.textBaseline='alphabetic'; ctx.fillText(fit(p[0],innerW), padX, ny+12*U*.86*scale); track(0,1); ny += 12*U*.95*scale + .4*U; font(600,3.6*scale,TEXT); ctx.fillText(fit(p[1]||'',innerW), padX, ny+3.4*U*scale); ny += 3.6*U*1.3*scale + 4.5*U; });
+      if(story) brand(padX,footY,theme); note(d.foot, story?'right':'left');
+    }
+    if(t==='step'){
+      font(800,20*scale,DISPLAY); track(-.04,20*scale); ctx.fillStyle = theme.bg===P.accent?P.ink:(theme.bg===P.ink?P.accent:P.line); ctx.textBaseline='alphabetic'; ctx.fillText(fit(String(d.n||'1'),innerW), padX, y+20*U*.74*scale); track(0,1); y += 20*U*.8*scale + 4*U;
+      var sy = story ? y : y + Math.max(0,(footY - y - topB.h)/2); paint(topB,padX,sy,fg);
+      brand(padX,footY,theme); var total=Math.max(1,Math.min(8,parseInt(d.of,10)||3)), on=Math.max(0,Math.min(total-1,(parseInt(d.n,10)||1)-1)); dots(W-padX, footY+3.1*U, on, total, fg);
+    }
+    if(t==='screen'){ // Story: the whole phone, between the words and the foot
+      paint(topB,padX,y,fg); y+=topB.h; if(subB.lines.length){ y+=3*U; paint(subB,padX,y,fg); y+=subB.h; }
+      y+=4*U; var avail = footY-4*U-y, img=imgs[d.shot], ar = (img&&img.naturalWidth)? img.naturalHeight/img.naturalWidth : 2.17;
+      var pw=58*U, ph=Math.min(avail, pw*ar);           // as wide as the brand's Story template; the screen is cut at the foot if it is taller than the room
+      drawPhone(img,(W-pw)/2,y,pw,ph,false); brand(padX,footY,theme); note(d.foot,'right');
+    }
+    finish();
+
+    function note(text, side){ if(!text) return; font(600,3.4,TEXT); ctx.fillStyle=fg; ctx.textBaseline='middle'; ctx.textAlign = side==='right'?'right':'left'; ctx.fillText(fit(text, innerW*(side==='right'?.55:1)), side==='right'?W-padX:padX, footY+3.1*U); ctx.textAlign='left'; }
+  }
+
+  // Keep a PNG ready, so the share sheet can open the instant the button is pressed.
+  var readyFile=null, pending=0;
+  function finish(){ var id=++pending; clearTimeout(finish.t); finish.t=setTimeout(function(){ canvas.toBlob(function(b){ if(id!==pending||!b) return; readyFile = new File([b], fileName(), { type:'image/png' }); }, 'image/png'); }, 180); }
+  function fileName(){ var d=new Date(), p=function(n){return String(n).padStart(2,'0');}; return 'doddily-' + state.template + '-' + state.format + '-' + d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes()) + '.png'; }
+
+  // ---------- controls ----------
+  var $ = function(id){ return document.getElementById(id); };
+  function pressed(container, attr, value){ [].forEach.call(container.querySelectorAll('button'), function(b){ b.setAttribute('aria-pressed', b.getAttribute(attr)===value ? 'true':'false'); }); }
+  function buildStatic(){
+    $('templates').innerHTML = Object.keys(TEMPLATES).map(function(k){ return '<button type="button" data-t="'+k+'">'+TEMPLATES[k].name+'</button>'; }).join('');
+    $('bgs').innerHTML = Object.keys(BG).map(function(k){ return '<button type="button" data-bg="'+k+'" aria-label="'+k+' background" style="background:'+BG[k].bg+'"></button>'; }).join('');
+  }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function buildFields(){
+    var t=state.template, d=state.data[t];
+    $('fields').innerHTML = TEMPLATES[t].fields.map(function(f){ var k=f[0], label=f[1], type=f[2], id='f-'+k;
+      if(type==='area') return '<div class="field"><label class="label" for="'+id+'">'+label+'</label><textarea id="'+id+'" data-k="'+k+'" rows="2">'+esc(d[k])+'</textarea></div>';
+      if(type==='text') return '<div class="field"><label class="label" for="'+id+'">'+label+'</label><input id="'+id+'" data-k="'+k+'" value="'+esc(d[k])+'" autocomplete="off"></div>';
+      if(type==='check') return '<label class="check"><input type="checkbox" id="'+id+'" data-k="'+k+'" '+(d[k]!==false?'checked':'')+'> '+label+'</label>';
+      if(type==='shots') return '<div class="field"><span class="label">'+label+'</span><div class="shots" id="shotpick">'+SHOTS.map(function(s){ return '<button type="button" data-shot="'+s[0]+'" aria-pressed="'+(d.shot===s[0])+'"><img src="shots/'+s[0]+'.jpg" alt=""><span>'+s[1]+'</span></button>'; }).join('')+'</div></div>';
+      if(type==='rows') return '<div class="field"><span class="label">Rows: a symbol, a name, a place, a time, a tag</span><div class="rows">'+(d.rows||[]).map(function(r,i){ return '<div class="row"><input data-row="'+i+'" data-rk="e" value="'+esc(r.e)+'" aria-label="Row '+(i+1)+' symbol" placeholder="🧸"><input data-row="'+i+'" data-rk="n" value="'+esc(r.n)+'" aria-label="Row '+(i+1)+' name" placeholder="Name"><div class="wide"><input data-row="'+i+'" data-rk="v" value="'+esc(r.v)+'" aria-label="Row '+(i+1)+' place" placeholder="Place"><input data-row="'+i+'" data-rk="t" value="'+esc(r.t)+'" aria-label="Row '+(i+1)+' time" placeholder="9:30"></div><div class="wide" style="grid-template-columns:1fr"><input data-row="'+i+'" data-rk="tag" value="'+esc(r.tag)+'" aria-label="Row '+(i+1)+' tag" placeholder="Tag, e.g. Free (optional)"></div></div>'; }).join('')+'</div></div>';
+      return ''; }).join('');
+  }
+  function sync(){ var story=state.format==='story'; pressed($('format'),'data-v',state.format); pressed($('templates'),'data-t',state.template); pressed($('bgs'),'data-bg',state.bg[state.template]); $('box').classList.toggle('story',story); $('guidewrap').hidden=!story; $('guides').hidden = !(story && $('guidetoggle').checked); draw(); save(); }
+
+  $('format').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; state.format=b.getAttribute('data-v'); sync(); });
+  $('templates').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; state.template=b.getAttribute('data-t'); buildFields(); sync(); });
+  $('bgs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; state.bg[state.template]=b.getAttribute('data-bg'); sync(); });
+  $('guidetoggle').addEventListener('change',sync);
+  $('fields').addEventListener('input',function(e){ var el=e.target, d=state.data[state.template]; if(el.hasAttribute('data-row')){ d.rows[+el.getAttribute('data-row')][el.getAttribute('data-rk')]=el.value; } else if(el.type==='checkbox'){ d[el.getAttribute('data-k')]=el.checked; } else if(el.hasAttribute('data-k')){ d[el.getAttribute('data-k')]=el.value; } draw(); save(); });
+  $('fields').addEventListener('click',function(e){ var b=e.target.closest('button[data-shot]'); if(!b) return; state.data.screen.shot=b.getAttribute('data-shot'); pressed($('shotpick'),'data-shot',state.data.screen.shot); draw(); save(); });
+  $('reset').addEventListener('click',function(){ var t=state.template; state.data[t]=JSON.parse(JSON.stringify(TEMPLATES[t].sample)); state.bg[t]=TEMPLATES[t].bg; buildFields(); sync(); });
+
+  function toast(msg){ var el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=msg; document.body.appendChild(el); setTimeout(function(){ el.remove(); }, 2200); }
+  function download(file){ var a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=file.name; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 800); toast('Downloaded'); }
+  $('share').addEventListener('click',function(){ if(!readyFile){ toast('One moment, still drawing'); return; } if(navigator.canShare && navigator.canShare({files:[readyFile]})){ navigator.share({ files:[readyFile] }).catch(function(){}); } else download(readyFile); });
+  $('download').addEventListener('click',function(){ if(readyFile) download(readyFile); else toast('One moment, still drawing'); });
+
+  buildStatic(); buildFields(); sync();
+  // Draw again once the brand fonts arrive: canvas text measures differently before they do.
+  if(document.fonts && document.fonts.load){ Promise.all(['800 100px "Bricolage Grotesque"','700 100px "Bricolage Grotesque"','400 40px "Figtree"','600 40px "Figtree"','700 40px "Figtree"'].map(function(f){ return document.fonts.load(f); })).then(draw, draw); document.fonts.ready.then(draw); }
+
+  // ?selftest draws every template in both shapes onto the page, for checking the layouts at a glance.
+  if(/[?&]selftest/.test(location.search)){ setTimeout(function(){ var wrapEl=document.createElement('div'); wrapEl.style.cssText='display:flex;flex-wrap:wrap;gap:12px;padding:16px;background:#fff'; var keep={f:state.format,t:state.template}; ['feed','story'].forEach(function(f){ Object.keys(TEMPLATES).forEach(function(t){ state.format=f; state.template=t; draw(); var im=new Image(); im.src=canvas.toDataURL('image/png'); im.style.cssText='height:330px;border-radius:8px;box-shadow:0 0 0 1px #ddd'; wrapEl.appendChild(im); }); }); state.format=keep.f; state.template=keep.t; draw(); document.body.innerHTML=''; document.body.appendChild(wrapEl); }, 2500); }
+})();
+</script>
+</body>
+</html>
