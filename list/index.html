@@ -28,6 +28,9 @@ html,body{margin:0;background:var(--milk);color:var(--ink);font:400 17px/1.5 var
 body{min-height:100svh;display:flex;flex-direction:column;padding:max(28px,env(safe-area-inset-top)) 20px max(28px,env(safe-area-inset-bottom))}
 :focus-visible{outline:3px solid var(--accent-line);outline-offset:2px;border-radius:8px}
 main{width:min(460px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.intro{display:flex;flex-direction:column;gap:22px}
+.panel{min-width:0}
+.steps{display:none}
 .mark{align-self:center;display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--ink);box-shadow:0 18px 40px -18px rgba(30,37,54,.45)}
 .mark svg{width:34px;height:34px;fill:var(--accent)}
 h1{margin:0;font:700 32px/1.05 var(--display);letter-spacing:-.015em;text-align:center}
@@ -67,6 +70,26 @@ textarea{min-height:84px;resize:vertical}
 .tick{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text)}
 .tick svg{width:26px;height:26px}
 [hidden]{display:none!important}
+
+/* Desktop: the words on the left, the form on the right, fields in pairs so it fits a screen without scrolling. */
+@media (min-width:1000px){
+  body{padding:48px 40px}
+  main{width:min(1040px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:40px clamp(40px,6vw,80px);align-items:center}
+  .intro{gap:28px}
+  .mark{align-self:flex-start;width:64px;height:64px;border-radius:18px}
+  .mark svg{width:38px;height:38px}
+  h1{font-size:60px;text-align:left}
+  .sub{text-align:left;font-size:20px;max-width:26ch}
+  .steps{display:grid;gap:18px;list-style:none;margin:6px 0 0;padding:0;counter-reset:step}
+  .steps li{counter-increment:step;display:grid;grid-template-columns:36px 1fr;column-gap:14px;align-items:start}
+  .steps li::before{content:counter(step);grid-row:span 2;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);font:700 16px var(--display)}
+  .steps b{font:600 17px/1.3 var(--text)}
+  .steps span{color:var(--muted);font-size:15.5px}
+  form{grid-template-columns:1fr 1fr;gap:18px 16px;padding:28px}
+  .f{align-content:start}
+  form .full{grid-column:1 / -1}
+  .done{padding:56px 28px}
+}
 footer{margin-top:auto;padding-top:28px;text-align:center;color:var(--muted);font-size:14px}
 footer a{color:inherit;text-decoration:none}
 footer a:hover{color:var(--ink)}
@@ -75,6 +98,7 @@ footer .heart{color:var(--accent-line)}
 </head>
 <body>
 <main>
+  <section class="intro">
   <a class="mark" href="https://doddily.app/" aria-label="Doddily home">
     <svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></svg>
   </a>
@@ -82,26 +106,33 @@ footer .heart{color:var(--accent-line)}
     <h1>List a class</h1>
     <p class="sub">Send us the link. We’ll check it and add it. Free, always.</p>
   </div>
+  <ol class="steps">
+    <li><b>Send the link</b><span>Or a photo of the poster.</span></li>
+    <li><b>We check it</b><span>Every class, before it goes in.</span></li>
+    <li><b>It’s in Doddily</b><span>Parents nearby can find it.</span></li>
+  </ol>
+  </section>
 
+  <section class="panel">
   <form id="form" novalidate>
-    <fieldset class="who">
+    <fieldset class="who full">
       <legend>Who are you?</legend>
       <label><input type="radio" name="who" value="run" checked>I run it</label>
       <label><input type="radio" name="who" value="go">I go to it</label>
     </fieldset>
 
-    <div class="f">
+    <div class="f full">
       <label for="name">Class or group name</label>
       <input id="name" name="name" type="text" maxlength="120" autocomplete="off" required>
     </div>
 
-    <div class="f">
+    <div class="f full">
       <label for="link">Link <span class="opt">where the times are posted</span></label>
       <input id="link" name="link" type="url" inputmode="url" maxlength="500" placeholder="https://" autocapitalize="off" autocomplete="off" spellcheck="false">
       <small>Your page, a Facebook or Instagram post, or a booking page.</small>
     </div>
 
-    <div class="f">
+    <div class="f full">
       <label class="pick" for="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.4"/><path d="M8 6l1.5-2h5L16 6"/></svg>
         <span id="pickText">No link? Add a photo of the poster</span>
@@ -133,9 +164,9 @@ footer .heart{color:var(--accent-line)}
 
     <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
 
-    <p class="err" id="err" role="alert" hidden></p>
-    <button class="send" id="send" type="submit">Send</button>
-    <p class="fine">We check every class before it goes in. <a href="https://doddily.app/privacy.html">Privacy</a></p>
+    <p class="err full" id="err" role="alert" hidden></p>
+    <button class="send full" id="send" type="submit">Send</button>
+    <p class="fine full">We check every class before it goes in. <a href="https://doddily.app/privacy.html">Privacy</a></p>
   </form>
 
   <div class="done" id="done" hidden>
@@ -144,6 +175,7 @@ footer .heart{color:var(--accent-line)}
     <p>We’ll check it and add it to Doddily.</p>
     <button type="button" id="again">Send another</button>
   </div>
+  </section>
 </main>
 <footer>
   <a href="https://doddily.app/">doddily.app</a> · <a href="https://doddily.app/privacy.html">Privacy</a> · Made with <span class="heart">♥</span> in Hackney
