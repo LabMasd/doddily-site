@@ -235,6 +235,11 @@ h2{font:700 clamp(30px,4vw,44px)/1.08 var(--display);letter-spacing:-.015em;marg
 @media (max-width:900px){.screens{grid-template-columns:1fr 1fr;gap:36px 24px}}
 @media (max-width:560px){.screens{grid-template-columns:1fr;gap:44px}}
 .fine{color:var(--muted);font-size:14px;margin-top:22px}
+/* For the people who run classes: one line and one button, last thing before the footer */
+.listcta .wrap{text-align:center}
+.listcta .intro{margin-bottom:26px}
+.listbtn{display:inline-block;font:600 16px var(--text);background:var(--ink);color:#fff;border-radius:999px;padding:13px 26px;text-decoration:none}
+.listbtn:hover{background:#2a3246}
 
 
 footer{padding-block:40px 56px;color:var(--muted);font-size:15px}
@@ -262,6 +267,7 @@ footer .heart{color:var(--accent-line)}
   <a class="wordmark" href="./" aria-label="Doddily home"><span class="o" aria-hidden="true"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</a>
   <nav aria-label="Main">
     <a href="#how">How it works</a>
+    <a href="list/">List a class</a>
     <a class="soon" href="https://apps.apple.com/gb/app/doddily/id6812515182">Get the app</a>
   </nav>
 </header>
@@ -424,6 +430,14 @@ footer .heart{color:var(--accent-line)}
         <div><strong>129,000</strong><span>parks, playgrounds and handy places</span></div>
       </div>
       <p class="fine">Timetables change, so every class links to its provider to check before you go. Map data © OpenStreetMap contributors.</p>
+    </div>
+  </section>
+
+  <section class="listcta">
+    <div class="wrap">
+      <h2>Run a class we don’t list?</h2>
+      <p class="intro">Send us the link to your timetable and we’ll add it. Free, always.</p>
+      <a class="listbtn" href="list/">List a class</a>
     </div>
   </section>
 
