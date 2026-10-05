@@ -61,6 +61,7 @@ textarea{min-height:84px;resize:vertical}
 .send:hover{background:#2a3246}
 .send:disabled{opacity:.6;cursor:default}
 .err{margin:0;color:var(--bad);font-size:15px;font-weight:500}
+.err a{color:inherit}
 .fine{margin:0;color:var(--muted);font-size:13.5px;text-align:center}
 .fine a{color:inherit}
 .done{display:grid;gap:14px;justify-items:center;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px 22px}
@@ -233,11 +234,21 @@ footer .heart{color:var(--accent-line)}
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ who: who(), name: v('name'), link: v('link'), where: v('where'), when: v('when'), ages: v('ages'), email: v('email'), company: $('company').value, took: Date.now() - opened, photo }) });
       const j = await r.json().catch(() => ({}));
-      if (!r.ok) { fail(j.error || 'That did not send. Please try again.', j.field); return; }
+      // 400 and 429 are about what was typed; anything else means our side is down, so hand over to email.
+      if (!r.ok && (r.status === 400 || r.status === 429)) { fail(j.error || 'That did not send. Please try again.', j.field); return; }
+      if (!r.ok) { byEmail(); return; }
       form.hidden = true; $('done').hidden = false; $('doneTitle').focus();
-    } catch { fail('That did not send. Check your connection and try again.'); }
+    } catch { byEmail(); }
     finally { send.disabled = false; send.textContent = 'Send'; }
   });
+  // If the form cannot reach us, the same details go into an email the person can send with one tap.
+  function byEmail() {
+    const v = (id) => $(id).value.trim();
+    const lines = ['Hi Doddily,', '', `Class or group: ${v('name')}`, `Link: ${v('link') || '(none, photo to follow)'}`, `Where: ${v('where')}`, `Day and time: ${v('when')}`, `Ages: ${v('ages')}`, `I ${who() === 'run' ? 'run it' : 'go to it'}.`, '', photo ? 'I have a photo of the poster. I will attach it to this email.' : ''];
+    const href = `mailto:hello@doddily.app?subject=${encodeURIComponent('A class for Doddily: ' + v('name'))}&body=${encodeURIComponent(lines.join('\n'))}`;
+    err.hidden = false; err.replaceChildren(document.createTextNode('Our form is having a moment. '), Object.assign(document.createElement('a'), { href, textContent: 'Send it by email instead' }), document.createTextNode(' — it is already filled in.'));
+    location.href = href;
+  }
   $('again').addEventListener('click', () => { form.reset(); setPhoto('', ''); syncWho(); $('done').hidden = true; form.hidden = false; $('name').focus(); });
 })();
 </script>
