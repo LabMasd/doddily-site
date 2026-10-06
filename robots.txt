@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /make/
+Disallow: /app-demo/
 
 Sitemap: https://doddily.app/sitemap.xml

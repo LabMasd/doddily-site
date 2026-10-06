@@ -83,6 +83,12 @@ p,.intro,.fine,figcaption,li,.you-row,.summary-line{text-wrap:pretty}
 .device::before{left:-3px;top:170px;height:56px;box-shadow:0 72px 0 #262c39}
 .device::after{right:-3px;top:210px;height:92px}
 .screen{position:relative;height:710px;border-radius:49px;overflow:hidden;background:var(--milk);box-shadow:0 0 0 1px #000}
+/* the real app in the phone: laid out 390 points wide, then scaled to the drawn screen; a still sits behind it until it is ready */
+.appstill{position:absolute;left:0;top:52px;width:100%;height:calc(100% - 52px);object-fit:cover;object-position:bottom;transition:opacity .3s ease}
+.appframe{position:absolute;left:0;top:52px;width:390px;height:calc((100% - 52px) / var(--k,.815));border:0;transform:scale(var(--k,.815));transform-origin:0 0;background:var(--milk);opacity:0;transition:opacity .3s ease;z-index:2}
+.screen.live .appframe{opacity:1}
+.screen.live .appstill{opacity:0}
+.screen.live .homebar{display:none} /* the app's own tab bar sits there */
 .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:100px;height:31px;border-radius:20px;background:#000;z-index:4}
 .status{display:flex;justify-content:space-between;align-items:center;height:52px;padding:4px 26px 0 40px;font:600 15px/1 var(--text);color:var(--ink)}
 .status .icons{display:flex;gap:4px;align-items:center;color:var(--ink)}
@@ -301,63 +307,14 @@ footer .heart{color:var(--accent-line)}
         <div class="screen">
           <div class="island"></div>
           <div class="status"><span>9:41</span><span class="icons"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 16 12"><path d="M8 12 5.4 9.3a3.7 3.7 0 0 1 5.2 0L8 12Zm-4.4-4.5L1.9 5.8a8.6 8.6 0 0 1 12.2 0l-1.7 1.7a6.2 6.2 0 0 0-8.8 0ZM0 3.9A11.3 11.3 0 0 1 16 3.9l-1.7 1.7a8.9 8.9 0 0 0-12.6 0L0 3.9Z"/></svg><svg viewBox="0 0 27 12"><rect x=".6" y=".6" width="23" height="10.8" rx="3.3" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".45"/><rect x="2.2" y="2.2" width="19.8" height="7.6" rx="2"/><path d="M25 4.2v3.6c.8-.3 1.3-1 1.3-1.8S25.8 4.5 25 4.2Z" opacity=".45"/></svg></span></div>
-          <div class="app">
-            <div class="app-logo" aria-hidden="true"><span class="wordmark"><span class="o"><svg viewBox="0 0 18 18"><g class="bloom"><circle cx="9" cy="3.6" r="3.6"/><circle cx="14.14" cy="7.33" r="3.6"/><circle cx="12.17" cy="13.37" r="3.6"/><circle cx="5.83" cy="13.37" r="3.6"/><circle cx="3.86" cy="7.33" r="3.6"/></g></svg></span>Doddily</span></div>
-
-            <div data-screen="today">
-              <div class="searchbar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>Search classes, groups and places</div>
-              <div class="week" id="dd-week"></div>
-              <div class="cal-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
-              <div class="chips" id="dd-chips"></div>
-              <div class="summary-line" id="dd-summary" aria-live="polite"></div>
-              <div class="s-title">Sessions</div>
-              <div id="dd-list"></div>
-            </div>
-
-            <div data-screen="map" hidden>
-              <div class="map" aria-hidden="true">
-                <div class="map-park"></div>
-                <div class="map-park b"></div>
-                <div class="map-ring"></div>
-                <div class="map-you"></div>
-                <div class="pin" style="left:25%;top:25%">🎵</div>
-                <div class="pin" style="left:64%;top:20%">📚</div>
-                <div class="pin" style="left:19%;top:61%">🧸</div>
-                <div class="pin" style="left:73%;top:57%">⚽</div>
-                <div class="pin" style="left:47%;top:75%">🌳</div>
-              </div>
-              <div class="summary-line">Example places within 3 mi of E8 1EA.</div>
-            </div>
-
-            <div data-screen="saved" hidden>
-              <div class="s-title">Saved</div>
-              <div class="row"><div class="t">10:30<small>Fridays</small></div><div><div class="n">Rhyme time <em>9 min walk</em></div><div class="v">Local library</div><div class="tags"><span class="free">Free</span><span class="drop">Drop in</span></div></div></div>
-              <div class="row"><div class="t">14:00<small>Saturdays</small></div><div><div class="n">Weekend soft play <em>1.1 mi</em></div><div class="v">Play barn</div><div class="tags"><span>£8</span><span>0–5 years</span></div></div></div>
-              <div class="summary-line">Saved sessions stay on your phone. No account, no sync.</div>
-            </div>
-
-            <div data-screen="you" hidden>
-              <div class="s-title">You</div>
-              <div class="you-row">Postcode <em>E8 1EA</em></div>
-              <div class="you-row">How far <em>3 mi</em></div>
-              <div class="you-row">Children <em>Ada 1–2, Jonah 3–5 years</em></div>
-              <div class="you-row">Directions <em>Apple Maps</em></div>
-              <div class="you-row">Reminders <em>30 minutes before</em></div>
-              <div class="summary-line">Your postcode, children and saved places stay on your phone.</div>
-            </div>
-
-            <div data-screen="detail" id="dd-detail" hidden></div>
-          </div>
-          <div class="tabbar" id="dd-tabs">
-            <button type="button" class="on" data-tab="today" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Today</button>
-            <button type="button" data-tab="map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11.2a6.5 6.5 0 1 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>Map</button>
-            <button type="button" data-tab="saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg>Saved</button>
-            <button type="button" data-tab="you"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.9 3.8-6.2 7.5-6.2s6.7 2.3 7.5 6.2"/></svg>You</button>
-          </div>
+          <!-- The app itself, built from the same code as the iPhone app, running here in demo mode (fixed to E8 1EA, nothing stored).
+               Until it has loaded, and wherever it cannot, a still of the Today screen shows instead. -->
+          <img class="appstill" src="shots/1-today.jpg" alt="" aria-hidden="true">
+          <iframe class="appframe" id="dd-app" title="Doddily, running in your browser: what’s on near E8 1EA" data-src="app-demo/" loading="lazy" hidden></iframe>
           <div class="homebar"></div>
         </div>
       </div>
-      <p class="note">Tap a session to open it. These are example sessions, not live listings.</p>
+      <p class="note">This is the app itself. Tap around: it shows what’s on near E8 1EA.</p>
     </div>
   </div>
 
@@ -468,254 +425,17 @@ footer .heart{color:var(--accent-line)}
 <script>
 /* The phone mockup: a small interactive demo built from example data. */
 (function(){
-  var list = document.getElementById('dd-list');
-  if(!list) return;
-  var weekEl = document.getElementById('dd-week'),
-      chipsEl = document.getElementById('dd-chips'),
-      tabsEl = document.getElementById('dd-tabs'),
-      summaryEl = document.getElementById('dd-summary'),
-      screenEl = document.querySelector('.screen'),
-      panels = document.querySelectorAll('[data-screen]');
-  var detailEl = document.getElementById('dd-detail'), shownItems = [];
-
-  /* start, end, name, venue, walk, category, tags */
-  function s(t,e,n,v,w,c,g){return {t:t,e:e,n:n,v:v,w:w,c:c,g:g};}
-  var FREE = ['Free','free'], DROP = ['Drop in','drop'], BOOK = ['Book ahead',''];
-
-  var days = [
-    {label:'Today', num:'16', aria:'Today, Wednesday 16', when:'today', short:'Wed', sessions:[
-      s('09:30','10:15','Baby and toddler music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
-      s('10:00','10:30','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
-      s('10:30','11:30','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
-      s('11:15','12:00','Toddler sensory class','Community centre','1.2 mi','classes',[BOOK,['13\u201336 months','']]),
-      s('15:00','17:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
-    ]},
-    {label:'Thu', num:'17', aria:'Thursday 17', when:'on Thursday', short:'Thu', sessions:[
-      s('09:45','10:30','Baby massage','Yoga studio','11 min walk','classes',[BOOK,['6 weeks\u20139 months','']]),
-      s('10:15','11:00','Baby sensory','Church hall','6 min walk','classes',[['\u00A310',''],['0\u201313 months','']]),
-      s('11:00','12:00','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
-      s('13:30','14:15','Toddler football','Sports hall','1.4 mi','classes',[['\u00A38',''],['18\u201348 months','']]),
-      s('14:30','16:30','Toddler soft play','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
-    ]},
-    {label:'Fri', num:'18', aria:'Friday 18', when:'on Friday', short:'Fri', sessions:[
-      s('09:30','10:15','Parent and baby swim','Leisure centre','1.6 mi','classes',[BOOK,['3 months\u20134 years','']]),
-      s('10:30','11:00','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
-      s('11:00','12:00','Baby group','Community centre','1.2 mi','rhymes',[FREE,DROP]),
-      s('15:30','17:00','Soft play afternoon','Play barn','1.1 mi','softplay',[['\u00A37',''],DROP])
-    ]},
-    {label:'Sat', num:'19', aria:'Saturday 19', when:'on Saturday', short:'Sat', sessions:[
-      s('09:00','09:45','Toddler swim','Leisure centre','1.6 mi','classes',[BOOK,['2\u20134 years','']]),
-      s('10:00','11:30','Little farmers','City farm','2.1 mi','classes',[['\u00A36',''],['18 months\u20135 years','']]),
-      s('10:30','11:15','Saturday music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
-      s('11:00','13:00','Family stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
-      s('14:00','16:00','Weekend soft play','Play barn','1.1 mi','softplay',[['\u00A38',''],['0\u20135 years','']])
-    ]},
-    {label:'Sun', num:'20', aria:'Sunday 20', when:'on Sunday', short:'Sun', sessions:[
-      s('09:30','10:15','Family swim','Leisure centre','1.6 mi','classes',[['\u00A34.50',''],DROP]),
-      s('10:00','11:30','Farm feeding time','City farm','2.1 mi','classes',[FREE,DROP]),
-      s('11:00','12:00','Sunday stay and play','Church hall','6 min walk','rhymes',[FREE,DROP]),
-      s('13:00','15:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A38',''],['0\u20135 years','']])
-    ]},
-    {label:'Mon', num:'21', aria:'Monday 21', when:'on Monday', short:'Mon', sessions:[
-      s('09:30','10:15','Baby and toddler music','Church hall','6 min walk','classes',[['\u00A39',''],['12\u201336 months','']]),
-      s('10:00','11:00','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
-      s('10:45','11:15','Baby rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
-      s('13:15','14:00','Toddler swim','Leisure centre','1.6 mi','classes',[BOOK,['2\u20134 years','']]),
-      s('15:00','17:00','Soft play session','Play barn','1.1 mi','softplay',[['\u00A37',''],['0\u20135 years','']])
-    ]},
-    {label:'Tue', num:'22', aria:'Tuesday 22', when:'on Tuesday', short:'Tue', sessions:[
-      s('10:00','10:45','Toddler sensory class','Community centre','1.2 mi','classes',[BOOK,['13\u201336 months','']]),
-      s('10:30','11:00','Rhyme time','Local library','9 min walk','rhymes',[FREE,DROP]),
-      s('11:30','12:30','Stay and play','Children\u2019s centre','14 min walk','rhymes',[FREE,DROP]),
-      s('14:00','16:00','Baby soft play hour','Play barn','1.1 mi','softplay',[['\u00A36',''],['0\u20132 years','']])
-    ]},
-    {label:'Week', num:'All', aria:'The whole week', when:'this week', short:'', all:true}
-  ];
-
-  var filters = [
-    {id:'all', label:'Everything'},
-    {id:'rhymes', label:'Rhymes & stay-and-play'},
-    {id:'classes', label:'Classes'},
-    {id:'softplay', label:'Soft play'}
-  ];
-
-  var dayIndex = 0, filterId = 'all';
-
-  // The bar is one week, Monday to Sunday, as in the app: days already gone are greyed, and All sits at the end.
-  var gone = [['Mon','14'],['Tue','15']];
-  weekEl.innerHTML = gone.map(function(g){
-    return '<button type="button" class="gone" disabled aria-label="' + g[0] + ' ' + g[1] + ', already gone">' + g[0] + '<strong>' + g[1] + '</strong></button>';
-  }).join('') + days.map(function(d, i){
-    if(d.all) return '<button type="button" class="all" data-day="' + i + '" aria-label="All, any day" aria-pressed="false"><strong>All</strong></button>';
-    if(i > 4) return ''; // next week's days are reached through All
-    return '<button type="button" data-day="' + i + '" aria-label="' + d.aria + '" aria-pressed="' +
-      (i === 0) + '"' + (i === 0 ? ' class="on"' : '') + '>' + d.label + '<strong>' + d.num + '</strong></button>';
-  }).join('');
-
-  chipsEl.innerHTML = filters.map(function(f){
-    return '<button type="button" data-cat="' + f.id + '" aria-pressed="' + (f.id === 'all') + '"' +
-      (f.id === 'all' ? ' class="on"' : '') + '>' + f.label + '</button>';
-  }).join('');
-
-  function tagsHtml(g){
-    return g.map(function(t){
-      return t[1] ? '<span class="' + t[1] + '">' + t[0] + '</span>' : '<span>' + t[0] + '</span>';
-    }).join('');
+  // Start the app in the phone once the page itself is ready, and scale it to the phone's screen:
+  // it is laid out at 390 points wide, like an iPhone, whatever size the drawing of the phone is.
+  var frame = document.getElementById('dd-app'), screen = frame && frame.parentNode;
+  if(!frame) return;
+  function fit(){ screen.style.setProperty('--k', screen.clientWidth / 390); }
+  fit(); window.addEventListener('resize', fit);
+  function start(){
+    frame.addEventListener('load', function(){ screen.classList.add('live'); }, { once: true });
+    frame.hidden = false; frame.src = frame.getAttribute('data-src');
   }
-
-  // "9 min walk" or "1.2 mi" in the sample data becomes the app's two lines: the walk, and the drive.
-  function farHtml(w){
-    var m = /(\d+) min walk/.exec(w), mi = /([\d.]+) mi/.exec(w);
-    var walk = m ? +m[1] : mi ? Math.round(+mi[1] * 20) : 0;
-    var drive = Math.max(2, Math.round(walk / 4.4));
-    return '<div class="far"><span>' + walk + ' min walk</span><span>' + drive + ' min drive</span></div>';
-  }
-
-  function rowHtml(item, i){
-    var x = item.s;
-    return '<button type="button" class="row" data-idx="' + i + '" aria-label="' + x.n + ', open details">' +
-      '<div class="t">' + x.t + '<small>to ' + x.e + '</small></div>' +
-      '<div><div class="n">' + x.n + '</div>' +
-      '<div class="v">' + x.v + (item.day ? ' \u00B7 ' + item.day : '') + '</div>' +
-      '<div class="tags">' + tagsHtml(x.g) + '</div></div>' + farHtml(x.w) + '</button>';
-  }
-
-  function render(){
-    var day = days[dayIndex], items = [];
-    if(day.all){
-      days.forEach(function(d){
-        if(!d.sessions) return;
-        d.sessions.forEach(function(x){ items.push({s:x, day:d.short}); });
-      });
-    } else {
-      day.sessions.forEach(function(x){ items.push({s:x, day:''}); });
-    }
-    var shown = items.filter(function(i){ return filterId === 'all' || i.s.c === filterId; });
-    shownItems = shown;
-
-    list.innerHTML = shown.length
-      ? shown.map(rowHtml).join('')
-      : '<div class="row"><div class="t">\u2014</div><div><div class="n">Nothing in this filter</div>' +
-        '<div class="v">Try Everything, or another day.</div></div></div>';
-
-    var where = ' within 3 mi of E8 1EA';
-    var text;
-    if(!shown.length){
-      text = 'No sessions ' + day.when + where;
-    } else if(filterId === 'all'){
-      text = shown.length + (shown.length === 1 ? ' session ' : ' sessions ') + day.when + where;
-    } else {
-      text = shown.length + ' of ' + items.length + ' sessions ' + day.when + where;
-    }
-    // All reads as it does in the app
-    if(day.all && shown.length && filterId === 'all') text = shown.length + ' things within 3 mi of E8 1EA, any day';
-    summaryEl.textContent = text;
-  }
-
-  function press(container, attr, value){
-    container.querySelectorAll('button').forEach(function(b){
-      var on = b.getAttribute(attr) === value;
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-pressed', on);
-    });
-  }
-
-  weekEl.addEventListener('click', function(e){
-    var b = e.target.closest('button[data-day]');
-    if(!b) return;
-    dayIndex = +b.getAttribute('data-day');
-    press(weekEl, 'data-day', b.getAttribute('data-day'));
-    render();
-  });
-
-  chipsEl.addEventListener('click', function(e){
-    var b = e.target.closest('button[data-cat]');
-    if(!b) return;
-    filterId = b.getAttribute('data-cat');
-    press(chipsEl, 'data-cat', filterId);
-    render();
-  });
-
-  function showTab(name){
-    tabsEl.querySelectorAll('button').forEach(function(x){
-      var on = x.getAttribute('data-tab') === name;
-      x.classList.toggle('on', on);
-      if(on){ x.setAttribute('aria-current', 'page'); } else { x.removeAttribute('aria-current'); }
-    });
-    panels.forEach(function(p){ p.hidden = p.getAttribute('data-screen') !== name; });
-    screenEl.setAttribute('data-tab', name);
-  }
-
-  tabsEl.addEventListener('click', function(e){
-    var b = e.target.closest('button[data-tab]');
-    if(b) showTab(b.getAttribute('data-tab'));
-  });
-
-  /* What a class looks like when you open it: the reason the app is worth having. */
-  var CAT = {
-    classes: '\u2728 Class',
-    rhymes: '\uD83D\uDCDA Stay and play',
-    softplay: '\uD83E\uDDF8 Soft play'
-  };
-  var ABOUT = {
-    classes: 'A weekly class for babies and toddlers with their grown-ups. Book a block or pay as you go.',
-    rhymes: 'A free drop-in: songs, toys and somewhere to sit with other parents. No need to book.',
-    softplay: 'Indoor play for under-fives, with somewhere to sit down and a coffee while they run about.'
-  };
-  function findTag(g, test){
-    for(var i=0;i<g.length;i++){ if(test(g[i][0])) return g[i][0]; }
-    return '';
-  }
-  function icon(d){ return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; }
-
-  function detailHtml(item){
-    var x = item.s;
-    var price = findTag(x.g, function(t){ return t === 'Free' || t.charAt(0) === '\u00A3'; }) || 'Check with the venue';
-    var booking = findTag(x.g, function(t){ return t === 'Drop in' || t === 'Book ahead'; }) || 'Check with the venue';
-    var ages = findTag(x.g, function(t){ return /month|year|week/.test(t); }) || 'All ages';
-    var day = item.day || days[dayIndex].label;
-    return '<button type="button" class="d-back">\u2039 Back</button>' +
-      '<div class="d-eyebrow">' + (CAT[x.c] || CAT.classes) + '</div>' +
-      '<h3 class="d-title">' + x.n + '</h3>' +
-      '<div class="d-where">' + x.v + ' \u00B7 ' + x.w + '</div>' +
-      '<div class="tags" style="margin-top:6px">' + tagsHtml(x.g) + '</div>' +
-      '<button type="button" class="d-cta">Directions</button>' +
-      '<div class="d-acts">' +
-        '<button type="button">' + icon('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>') + 'Website</button>' +
-        '<button type="button">' + icon('<path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4 5.2 2 2 0 0 1 6 3z"/>') + 'Call</button>' +
-        '<button type="button">' + icon('<path d="M12 20s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>') + 'Save</button>' +
-        '<button type="button">' + icon('<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>') + 'Calendar</button>' +
-        '<button type="button">' + icon('<path d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 13 6 9z"/><path d="M10 18a2 2 0 0 0 4 0"/>') + 'Remind me</button>' +
-        '<button type="button">' + icon('<path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>') + 'Send</button>' +
-      '</div>' +
-      '<div class="d-card"><h4>When</h4><div class="d-when">' +
-        '<b>' + day + '</b><span>' + x.t + '\u2013' + x.e + '</span>' +
-        '</div><div class="d-note">Runs term time. Next: ' + day + ' at ' + x.t + '.</div></div>' +
-      '<div class="d-card"><h4>Details</h4><div class="d-when">' +
-        '<b>Price</b><span>' + price + '</span>' +
-        '<b>Booking</b><span>' + booking + '</span>' +
-        '<b>Ages</b><span>' + ages + '</span>' +
-        '</div></div>' +
-      '<div class="d-card"><h4>About</h4><p class="d-about">' + (ABOUT[x.c] || ABOUT.classes) + '</p></div>';
-  }
-
-  list.addEventListener('click', function(e){
-    var b = e.target.closest('button.row');
-    if(!b) return;
-    var item = shownItems[+b.getAttribute('data-idx')];
-    if(!item) return;
-    detailEl.innerHTML = detailHtml(item);
-    panels.forEach(function(p){ p.hidden = p.getAttribute('data-screen') !== 'detail'; });
-    screenEl.setAttribute('data-tab', 'detail');
-    detailEl.querySelector('.d-back').focus();
-  });
-
-  detailEl.addEventListener('click', function(e){
-    if(e.target.closest('.d-back')) showTab('today');
-  });
-
-  screenEl.setAttribute('data-tab', 'today');
-  render();
+  if(document.readyState === 'complete') start(); else window.addEventListener('load', start);
 })();
 
 // The hero bloom follows the cursor on pointer devices; elsewhere it stays where it is.
