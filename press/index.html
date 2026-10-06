@@ -93,10 +93,10 @@ details .more a{display:inline-block;padding:11px 2px;margin:-11px 0}
 .shots::-webkit-scrollbar{display:none}
 .shots li{flex:0 0 min(62vw,240px);scroll-snap-align:start}
 .shots a{display:block;text-decoration:none;color:var(--ink)}
-.shots img{display:block;width:100%;aspect-ratio:1290/2796;border-radius:14px;background:var(--milk);box-shadow:0 1px 0 var(--line)}
+.shots img{display:block;width:100%;height:auto;aspect-ratio:1290/2796;border-radius:14px;background:var(--milk);box-shadow:0 1px 0 var(--line)}
 .shots figcaption{display:flex;justify-content:space-between;align-items:center;min-height:44px;font:600 15px var(--text)}
 .shots figcaption small{color:var(--muted);font-weight:500}
-@media (min-width:700px){.shots{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible;margin:0;padding:0}.shots li{flex:none}}
+@media (min-width:700px){.shots{display:grid;grid-template-columns:repeat(6,1fr);overflow:visible;margin:0;padding:0}.shots li{flex:none}}
 
 /* colours */
 .swatches{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;list-style:none;margin:0 0 20px;padding:0}
@@ -168,7 +168,7 @@ footer.page{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);co
       <ul>
         <li>logos/ · the mark, wordmark and lockup as SVG and PNG, in ink, white and purple on ink</li>
         <li>app-icon/ · 1024 px square master and a rounded preview</li>
-        <li>screenshots/ · five iPhone screens, raw and framed at 1290 × 2796</li>
+        <li>screenshots/ · seven iPhone screens, raw and framed at 1290 × 2796</li>
         <li>colours.txt · fonts.txt · README.txt</li>
         <li>press-release.md · press-release.pdf · fact-sheet.pdf</li>
       </ul>
@@ -215,14 +215,15 @@ footer.page{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);co
   <h2>Screenshots</h2>
   <p class="sub">Tap one to open it full size. Each is framed on milk at 1290 × 2796.</p>
   <ul class="shots">
-    <li><figure style="margin:0"><a href="assets/screenshots/framed/today-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/today.jpg" alt="Today screen: sessions in time order" loading="lazy" width="560" height="1214"><figcaption>Today<small>JPG</small></figcaption></a></figure></li>
-    <li><figure style="margin:0"><a href="assets/screenshots/framed/map-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/map.jpg" alt="Map screen: pins within three miles" loading="lazy" width="560" height="1214"><figcaption>Map<small>JPG</small></figcaption></a></figure></li>
-    <li><figure style="margin:0"><a href="assets/screenshots/framed/detail-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/detail.jpg" alt="Class detail with directions, book, call, save and send" loading="lazy" width="560" height="1214"><figcaption>Detail<small>JPG</small></figcaption></a></figure></li>
-    <li><figure style="margin:0"><a href="assets/screenshots/framed/saved-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/saved.jpg" alt="Saved screen" loading="lazy" width="560" height="1214"><figcaption>Saved<small>JPG</small></figcaption></a></figure></li>
-    <li><figure style="margin:0"><a href="assets/screenshots/framed/you-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/you.jpg" alt="You screen: postcode, distance and children" loading="lazy" width="560" height="1214"><figcaption>You<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/today-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/today.jpg?v=2" alt="Today screen: sessions in time order" loading="lazy" width="560" height="1214"><figcaption>Today<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/calendar-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/calendar.jpg?v=2" alt="Calendar open: four weeks to plan ahead" loading="lazy" width="560" height="1214"><figcaption>Calendar<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/map-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/map.jpg?v=2" alt="Map screen: pins within three miles" loading="lazy" width="560" height="1214"><figcaption>Map<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/detail-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/detail.jpg?v=2" alt="A class page: when, about, details, with directions, save and send" loading="lazy" width="560" height="1214"><figcaption>Class page<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/saved-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/saved.jpg?v=2" alt="Saved screen" loading="lazy" width="560" height="1214"><figcaption>Saved<small>JPG</small></figcaption></a></figure></li>
+    <li><figure style="margin:0"><a href="assets/screenshots/framed/you-framed.jpg" target="_blank" rel="noopener"><img src="thumbs/you.jpg?v=2" alt="You screen: postcode, distance and children" loading="lazy" width="560" height="1214"><figcaption>You<small>JPG</small></figcaption></a></figure></li>
   </ul>
   <details><summary>More</summary><div class="more">
-    <p>Unframed screens: <a href="assets/screenshots/today.jpg" download>Today</a> · <a href="assets/screenshots/map.jpg" download>Map</a> · <a href="assets/screenshots/detail.jpg" download>Detail</a> · <a href="assets/screenshots/saved.jpg" download>Saved</a> · <a href="assets/screenshots/you.jpg" download>You</a>. Crop freely, but please don’t edit what’s on screen.</p>
+    <p>Unframed screens, 1320 × 2868: <a href="assets/screenshots/today.jpg" download>Today</a> · <a href="assets/screenshots/week.jpg" download>All week</a> · <a href="assets/screenshots/calendar.jpg" download>Calendar</a> · <a href="assets/screenshots/map.jpg" download>Map</a> · <a href="assets/screenshots/detail.jpg" download>Class page</a> · <a href="assets/screenshots/saved.jpg" download>Saved</a> · <a href="assets/screenshots/you.jpg" download>You</a>. Framed “All week”: <a href="assets/screenshots/framed/week-framed.jpg" download>JPG</a>. Crop freely, but please don’t edit what’s on screen.</p>
   </div></details>
 </section>
 

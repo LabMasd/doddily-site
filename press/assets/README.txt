@@ -17,9 +17,9 @@ app-icon/
   doddily-app-icon-1024-rounded.png              Rounded-corner preview, transparent corners
 
 screenshots/
-  today.jpg, map.jpg, saved.jpg, you.jpg, detail.jpg   iPhone screens, 1000 to 1170 px wide
+  today.jpg, week.jpg, calendar.jpg, map.jpg,    iPhone screens of the current app (October 2026), 1320 x 2868
+  detail.jpg, saved.jpg, you.jpg
   framed/                                        The same screens on milk in a thin ink outline, 1290 x 2796
-  simulator/                                     Earlier previews from the iOS Simulator (dev build, show a settings gear); use the ones above where you can
 
 colours.txt, fonts.txt
 press-release.md, press-release.pdf
