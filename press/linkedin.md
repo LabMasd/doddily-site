@@ -8,13 +8,13 @@ Two weeks after my second was born I spent a whole nap time trying to answer one
 
 Instagram had half of it. A Facebook group had a third. The council had a PDF from 2024. The library rhyme time wasn’t anywhere.
 
-So Marcos and I built Doddily. Open it, add your postcode and your children’s ages, and it shows today’s classes, groups and soft play near you, in time order, with the walking time from your door.
+So I built Doddily. Open it, add your postcode and your children’s ages, and it shows today’s classes, groups and soft play near you, in time order, with the walking time from your door.
 
 13,500 classes across the UK on day one. No account, no ads, nothing collected. It launched on the App Store this week and I still can’t quite believe I get to use it on Monday.
 
 If you know a parent of a baby or toddler, send it their way. And if you run a class, email us a link and we’ll add it.
 
-## 2. The product (Marcos’s voice)
+## 2. The product
 
 We launched Doddily this week: baby and toddler classes near you, laid out like a timetable.
 
@@ -40,4 +40,4 @@ Doddily is live on the App Store. What’s inside, on day one:
 921 soft play centres
 0 accounts, 0 ads, 0 trackers
 
-Built in Hackney by two parents who wanted a timetable instead of a feed. iPhone only for now, Android on its way. Link in the first comment.
+Built in Hackney by a mum who wanted a timetable instead of a feed. iPhone only for now, Android on its way. Link in the first comment.
