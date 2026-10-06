@@ -10,7 +10,7 @@ Doddily, launched on the App Store on 2 October 2026, lists more than 13,500 bab
 
 Open it, add your postcode and your children’s ages, and Today shows that day’s sessions in time order with the walking time from your door. Filters for free, no booking and rainy day narrow it down. Every listing carries the times, price, age range, how to book and the address, with one tap to directions, the provider’s own booking page, your calendar or a reminder.
 
-“We built the thing we kept wishing existed at 7am,” said [Victoria Surname], co-founder. “You have a baby who naps at 11 and a toddler who needs to run, and the answer to ‘what’s on near us this morning?’ is scattered across Instagram, Facebook groups, council PDFs and word of mouth. Doddily puts it on one page.”
+“We built the thing we kept wishing existed at 7am,” said Victoria Draisey, co-founder. “You have a baby who naps at 11 and a toddler who needs to run, and the answer to ‘what’s on near us this morning?’ is scattered across Instagram, Facebook groups, council PDFs and word of mouth. Doddily puts it on one page.”
 
 Doddily only lists classes and places that are already published online, and every entry links back to the provider so parents can check before they go. Nothing is collected: no account, no tracking, no ads. Your postcode, your children and your saved places stay on your phone.
 
@@ -27,11 +27,11 @@ Doddily is available now on the App Store for iPhone, priced at £2.99 with Fami
 
 **About Doddily**
 
-Doddily is an independent app made in Hackney, London by [Victoria Surname] and Marcos Silva, parents of [a two-year-old and a baby]. It launched on the UK App Store on 2 October 2026. doddily.app · @doddily.app
+Doddily is an independent app made in Hackney, London by Victoria Draisey and Marcos Silva, parents of [a two-year-old and a baby]. It launched on the UK App Store on 2 October 2026. doddily.app · @doddily.app
 
 **Press contact**
 
-[Victoria Surname] · hello@doddily.app · Images, screenshots and the app icon: doddily.app/press
+Victoria Draisey · hello@doddily.app · Images, screenshots and the app icon: doddily.app/press
 
 ---
 
