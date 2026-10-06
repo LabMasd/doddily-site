@@ -92,16 +92,24 @@ p,.intro,.fine,figcaption,li,.you-row,.summary-line{text-wrap:pretty}
 .app-logo .wordmark{font-size:18px}
 .searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font:500 13.5px var(--text);color:var(--muted)}
 .searchbar svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
-.week{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;margin:10px 0 8px;text-align:center}
+.week{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;margin:10px 0 0;text-align:center}
 .week button{-webkit-appearance:none;appearance:none;width:100%;border:0;background:none;cursor:pointer;border-radius:11px;padding:4px 0 5px;font:500 10px var(--text);color:var(--muted)}
 .week strong{display:block;font:700 15px/1.15 var(--display);color:var(--ink)}
 .week .on{background:var(--accent);color:var(--ink)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.week .gone{opacity:.32;cursor:default}
+.week .all{display:flex;align-items:center;justify-content:center}
+.week .all strong{font-size:13px}
+.cal-arrow{display:flex;justify-content:center;margin:1px 0 5px;color:var(--muted)}
+.cal-arrow svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;flex-wrap:nowrap;gap:6px;margin:0 -14px 4px 0;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
 .chips button{-webkit-appearance:none;appearance:none;flex:none;cursor:pointer;color:inherit;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;font:500 11.5px var(--text)}
 .chips .on{background:var(--ink);border-color:var(--ink);color:#fff}
 .summary-line{font-size:11.5px;color:var(--muted);margin:6px 0 0}
 .s-title{font:700 14px var(--display);margin:10px 0 2px}
-.row{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:48px 1fr auto;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.far{text-align:right;white-space:nowrap;font:500 10.5px/1.4 var(--text);color:var(--muted);padding-top:1px}
+.far span{display:block}
 .s-title + .row{border-top:0}
 .t{font:700 16px/1 var(--display);font-variant-numeric:tabular-nums}
 .t small{display:block;font:500 10px var(--text);color:var(--muted);margin-top:3px}
@@ -116,7 +124,8 @@ p,.intro,.fine,figcaption,li,.you-row,.summary-line{text-wrap:pretty}
 .screen[data-tab="map"]::after{display:none}
 .tabbar{position:absolute;left:16px;right:16px;bottom:26px;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(223,227,233,.9);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(30,37,54,.14)}
 .tabbar button{-webkit-appearance:none;appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 10px var(--text);color:var(--ink);padding:6px 0 5px;border-radius:999px}
-.tabbar .on{background:#EDEFF3;color:#0A84FF}
+.tabbar .on{background:#EDEFF3}
+.tabbar .on svg{color:#8A6FD6}
 .tabbar svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:124px;height:5px;border-radius:3px;background:var(--ink);z-index:3}
 
@@ -298,6 +307,7 @@ footer .heart{color:var(--accent-line)}
             <div data-screen="today">
               <div class="searchbar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>Search classes, groups and places</div>
               <div class="week" id="dd-week"></div>
+              <div class="cal-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
               <div class="chips" id="dd-chips"></div>
               <div class="summary-line" id="dd-summary" aria-live="polite"></div>
               <div class="s-title">Sessions</div>
@@ -524,14 +534,20 @@ footer .heart{color:var(--accent-line)}
 
   var filters = [
     {id:'all', label:'Everything'},
-    {id:'rhymes', label:'Rhymes & stay and play'},
+    {id:'rhymes', label:'Rhymes & stay-and-play'},
     {id:'classes', label:'Classes'},
     {id:'softplay', label:'Soft play'}
   ];
 
   var dayIndex = 0, filterId = 'all';
 
-  weekEl.innerHTML = days.map(function(d, i){
+  // The bar is one week, Monday to Sunday, as in the app: days already gone are greyed, and All sits at the end.
+  var gone = [['Mon','14'],['Tue','15']];
+  weekEl.innerHTML = gone.map(function(g){
+    return '<button type="button" class="gone" disabled aria-label="' + g[0] + ' ' + g[1] + ', already gone">' + g[0] + '<strong>' + g[1] + '</strong></button>';
+  }).join('') + days.map(function(d, i){
+    if(d.all) return '<button type="button" class="all" data-day="' + i + '" aria-label="All, any day" aria-pressed="false"><strong>All</strong></button>';
+    if(i > 4) return ''; // next week's days are reached through All
     return '<button type="button" data-day="' + i + '" aria-label="' + d.aria + '" aria-pressed="' +
       (i === 0) + '"' + (i === 0 ? ' class="on"' : '') + '>' + d.label + '<strong>' + d.num + '</strong></button>';
   }).join('');
@@ -547,13 +563,21 @@ footer .heart{color:var(--accent-line)}
     }).join('');
   }
 
+  // "9 min walk" or "1.2 mi" in the sample data becomes the app's two lines: the walk, and the drive.
+  function farHtml(w){
+    var m = /(\d+) min walk/.exec(w), mi = /([\d.]+) mi/.exec(w);
+    var walk = m ? +m[1] : mi ? Math.round(+mi[1] * 20) : 0;
+    var drive = Math.max(2, Math.round(walk / 4.4));
+    return '<div class="far"><span>' + walk + ' min walk</span><span>' + drive + ' min drive</span></div>';
+  }
+
   function rowHtml(item, i){
     var x = item.s;
     return '<button type="button" class="row" data-idx="' + i + '" aria-label="' + x.n + ', open details">' +
       '<div class="t">' + x.t + '<small>to ' + x.e + '</small></div>' +
-      '<div><div class="n">' + x.n + ' <em>' + x.w + '</em></div>' +
+      '<div><div class="n">' + x.n + '</div>' +
       '<div class="v">' + x.v + (item.day ? ' \u00B7 ' + item.day : '') + '</div>' +
-      '<div class="tags">' + tagsHtml(x.g) + '</div></div></button>';
+      '<div class="tags">' + tagsHtml(x.g) + '</div></div>' + farHtml(x.w) + '</button>';
   }
 
   function render(){
@@ -583,6 +607,8 @@ footer .heart{color:var(--accent-line)}
     } else {
       text = shown.length + ' of ' + items.length + ' sessions ' + day.when + where;
     }
+    // All reads as it does in the app
+    if(day.all && shown.length && filterId === 'all') text = shown.length + ' things within 3 mi of E8 1EA, any day';
     summaryEl.textContent = text;
   }
 
