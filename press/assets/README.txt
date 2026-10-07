@@ -25,6 +25,11 @@ flyers/
   doddily-flyer-<name>.png / .pdf                Six fronts (new-mums, maternity-leave, overwhelmed-parents, toddlers,
                                                  weekend, grandparents) and a back, 1080 x 1350, each with the App Store QR
 
+stickers/
+  doddily-sticker-<name>.png / .gif             Six flower stickers (tiny-dictator, powered-by-snacks, ask-me-after-my-nap,
+                                                 small-but-mighty, tiny-human-big-plans, play-snack-repeat): see-through PNG
+                                                 and a moving GIF each; doddily-stickers-all-*.gif = all six; the sheet as PNG
+
 colours.txt, fonts.txt
 press-release.md, press-release.pdf
 fact-sheet.pdf
