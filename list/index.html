@@ -105,11 +105,11 @@ footer .heart{color:var(--accent-line)}
   </a>
   <div>
     <h1>List a class</h1>
-    <p class="sub">Send us the link. We’ll check it and add it. Free, always.</p>
+    <p class="sub">Send us the link. We check every class before it goes in. Free, always.</p>
   </div>
   <ol class="steps">
-    <li><b>Send the link</b><span>Or a photo of the poster.</span></li>
-    <li><b>We check it</b><span>Every class, before it goes in.</span></li>
+    <li><b>Send the link</b><span>Your page, so we can check it’s real.</span></li>
+    <li><b>We check it</b><span>We may call or email to confirm.</span></li>
     <li><b>It’s in Doddily</b><span>Parents nearby can find it.</span></li>
   </ol>
   </section>
@@ -129,14 +129,14 @@ footer .heart{color:var(--accent-line)}
 
     <div class="f full">
       <label for="link">Link <span class="opt">where the times are posted</span></label>
-      <input id="link" name="link" type="url" inputmode="url" maxlength="500" placeholder="https://" autocapitalize="off" autocomplete="off" spellcheck="false">
-      <small>Your page, a Facebook or Instagram post, or a booking page.</small>
+      <input id="link" name="link" type="url" inputmode="url" maxlength="500" placeholder="https://" autocapitalize="off" autocomplete="off" spellcheck="false" required>
+      <small>Your website, Facebook or Instagram page, or booking page. We use it to check the class is real and the details are right.</small>
     </div>
 
     <div class="f full">
       <label class="pick" for="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.4"/><path d="M8 6l1.5-2h5L16 6"/></svg>
-        <span id="pickText">No link? Add a photo of the poster</span>
+        <span id="pickText">Add a photo of the poster too (optional)</span>
         <input id="photo" type="file" accept="image/*">
       </label>
       <button class="clear" id="clear" type="button" hidden>Remove photo</button>
@@ -155,6 +155,12 @@ footer .heart{color:var(--accent-line)}
     <div class="f">
       <label for="ages">Ages <span class="opt">if you know</span></label>
       <input id="ages" name="ages" type="text" maxlength="120" placeholder="0 to 12 months" autocomplete="off">
+    </div>
+
+    <div class="f">
+      <label for="phone">Phone <span class="opt">optional</span></label>
+      <input id="phone" name="phone" type="tel" inputmode="tel" maxlength="40" autocomplete="tel">
+      <small>If something needs checking, a quick call is often easiest.</small>
     </div>
 
     <div class="f">
@@ -208,7 +214,7 @@ footer .heart{color:var(--accent-line)}
     img.onerror = () => { URL.revokeObjectURL(url); no(); };
     img.src = url;
   });
-  const setPhoto = (data, name) => { photo = data; $('pickText').textContent = data ? name : 'No link? Add a photo of the poster'; $('clear').hidden = !data; };
+  const setPhoto = (data, name) => { photo = data; $('pickText').textContent = data ? name : 'Add a photo of the poster too (optional)'; $('clear').hidden = !data; };
   file.addEventListener('change', async () => {
     const f = file.files[0]; if (!f) return;
     try { setPhoto(await shrink(f), f.name); fail(''); } catch { setPhoto('', ''); fail('That photo could not be read. Try another one.'); }
@@ -226,13 +232,13 @@ footer .heart{color:var(--accent-line)}
     e.preventDefault();
     const v = (id) => $(id).value.trim();
     if (!v('name')) return fail('Add the name of the class.', 'name');
-    if (!v('link') && !photo) return fail('Add a link or a photo so we can check it.', 'link');
+    if (!v('link')) return fail('Add a link to the class’s page, so we can check it.', 'link');
     if (!v('where')) return fail('Add where it runs.', 'where');
     if (v('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return fail('That email does not look right.', 'email');
     if (who() === 'run' && !v('email')) return fail('Add your email so we can check details with you.', 'email');
     fail(''); send.disabled = true; send.textContent = 'Sending…';
     try {
-      const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ who: who(), name: v('name'), link: v('link'), where: v('where'), when: v('when'), ages: v('ages'), email: v('email'), company: $('company').value, took: Date.now() - opened, photo }) });
+      const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ who: who(), name: v('name'), link: v('link'), where: v('where'), when: v('when'), ages: v('ages'), email: v('email'), phone: v('phone'), company: $('company').value, took: Date.now() - opened, photo }) });
       const j = await r.json().catch(() => ({}));
       // 400 and 429 are about what was typed; anything else means our side is down, so hand over to email.
       if (!r.ok && (r.status === 400 || r.status === 429)) { fail(j.error || 'That did not send. Please try again.', j.field); return; }
@@ -244,7 +250,7 @@ footer .heart{color:var(--accent-line)}
   // If the form cannot reach us, the same details go into an email the person can send with one tap.
   function byEmail() {
     const v = (id) => $(id).value.trim();
-    const lines = ['Hi Doddily,', '', `Class or group: ${v('name')}`, `Link: ${v('link') || '(none, photo to follow)'}`, `Where: ${v('where')}`, `Day and time: ${v('when')}`, `Ages: ${v('ages')}`, `I ${who() === 'run' ? 'run it' : 'go to it'}.`, '', photo ? 'I have a photo of the poster. I will attach it to this email.' : ''];
+    const lines = ['Hi Doddily,', '', `Class or group: ${v('name')}`, `Link: ${v('link')}`, `Phone: ${v('phone') || '(none)'}`, `Where: ${v('where')}`, `Day and time: ${v('when')}`, `Ages: ${v('ages')}`, `I ${who() === 'run' ? 'run it' : 'go to it'}.`, '', photo ? 'I have a photo of the poster. I will attach it to this email.' : ''];
     const href = `mailto:hello@doddily.app?subject=${encodeURIComponent('A class for Doddily: ' + v('name'))}&body=${encodeURIComponent(lines.join('\n'))}`;
     err.hidden = false; err.replaceChildren(document.createTextNode('Our form is having a moment. '), Object.assign(document.createElement('a'), { href, textContent: 'Send it by email instead' }), document.createTextNode(' — it is already filled in.'));
     location.href = href;
