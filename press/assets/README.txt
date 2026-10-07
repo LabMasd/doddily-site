@@ -21,6 +21,10 @@ screenshots/
   detail.jpg, saved.jpg, you.jpg
   framed/                                        The same screens on milk in a thin ink outline, 1290 x 2796
 
+flyers/
+  doddily-flyer-<name>.png / .pdf                Six fronts (new-mums, maternity-leave, overwhelmed-parents, toddlers,
+                                                 weekend, grandparents) and a back, 1080 x 1350, each with the App Store QR
+
 colours.txt, fonts.txt
 press-release.md, press-release.pdf
 fact-sheet.pdf
