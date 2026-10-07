@@ -130,7 +130,7 @@ footer .heart{color:var(--accent-line)}
     <div class="f full">
       <label for="link">Link <span class="opt">where the times are posted</span></label>
       <input id="link" name="link" type="url" inputmode="url" maxlength="500" placeholder="https://" autocapitalize="off" autocomplete="off" spellcheck="false" required>
-      <small>Your website, Facebook or Instagram page, or booking page. We use it to check the class is real and the details are right.</small>
+      <small>Your website, Facebook or Instagram page, or booking page. We use it to check the class is real and the details are right. No link? Email <a href="mailto:hello@doddily.app?subject=A%20class%20without%20a%20link">hello@doddily.app</a> and tell us about it instead.</small>
     </div>
 
     <div class="f full">
@@ -164,9 +164,9 @@ footer .heart{color:var(--accent-line)}
     </div>
 
     <div class="f">
-      <label for="email">Your email <span class="opt" id="emailOpt" hidden>optional</span></label>
-      <input id="email" name="email" type="email" inputmode="email" maxlength="200" autocapitalize="off" autocomplete="email" spellcheck="false">
-      <small>Only used if we need to check something about this class.</small>
+      <label for="email">Your email</label>
+      <input id="email" name="email" type="email" inputmode="email" maxlength="200" autocapitalize="off" autocomplete="email" spellcheck="false" required>
+      <small>So we can check something with you if we need to, and tell you when it’s in.</small>
     </div>
 
     <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
@@ -195,7 +195,7 @@ footer .heart{color:var(--accent-line)}
   const opened = Date.now(); let photo = '';
 
   const who = () => form.elements.who.value;
-  const syncWho = () => { $('emailOpt').hidden = who() === 'run'; };
+  const syncWho = () => {};
   form.querySelectorAll('input[name=who]').forEach((r) => r.addEventListener('change', syncWho)); syncWho();
 
   // photos are shrunk in the browser so a phone picture sends quickly
@@ -235,7 +235,7 @@ footer .heart{color:var(--accent-line)}
     if (!v('link')) return fail('Add a link to the class’s page, so we can check it.', 'link');
     if (!v('where')) return fail('Add where it runs.', 'where');
     if (v('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return fail('That email does not look right.', 'email');
-    if (who() === 'run' && !v('email')) return fail('Add your email so we can check details with you.', 'email');
+    if (!v('email')) return fail('Add your email, so we can check something with you if we need to.', 'email');
     fail(''); send.disabled = true; send.textContent = 'Sending…';
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ who: who(), name: v('name'), link: v('link'), where: v('where'), when: v('when'), ages: v('ages'), email: v('email'), phone: v('phone'), company: $('company').value, took: Date.now() - opened, photo }) });
